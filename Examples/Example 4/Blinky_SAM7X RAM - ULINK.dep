@@ -1,0 +1,23 @@
+Dependencies for Project 'Blinky', Target 'SAM7X RAM - ULINK': (DO NOT MODIFY !)
+F (.\SAM7.s)(0x54326A04)(--cpu ARM7TDMI -g --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\sam7.o --depend .\ram\sam7.d)
+F (.\Retarget.c)(0x54326A04)(-c --cpu ARM7TDMI -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\retarget.o --depend .\ram\retarget.d)
+I (C:\Keil\ARM\ARMCC\include\rt_misc.h)(0x52FE26DE)
+F (.\delay.c)(0x54326A04)(-c --cpu ARM7TDMI -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\delay.o --depend .\ram\delay.d)
+I (delay.h)(0x54326A04)
+F (.\lcd.c)(0x5469E264)(-c --cpu ARM7TDMI -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\lcd.o --depend .\ram\lcd.d)
+I (C:\Keil\ARM\Inc\Atmel\SAM7X\at91sam7x256.h)(0x527374BE)
+I (lcd.h)(0x54326A04)
+I (C:\Keil\ARM\ARMCC\include\inttypes.h)(0x52FE26DE)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x52FE26DE)
+F (.\main_code.c)(0x546C5326)(-c --cpu ARM7TDMI -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\main_code.o --depend .\ram\main_code.d)
+I (C:\Keil\ARM\Inc\Atmel\SAM7X\AT91SAM7X256.H)(0x527374BE)
+I (C:\Keil\ARM\ARMCC\include\stdio.H)(0x52FE26DE)
+I (C:\Keil\ARM\ARMCC\include\math.H)(0x52FE26DE)
+I (lcd.h)(0x54326A04)
+I (adc.h)(0x546C535D)
+I (C:\Keil\ARM\ARMCC\include\inttypes.h)(0x52FE26DE)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x52FE26DE)
+F (.\adc.c)(0x546C52DD)(-c --cpu ARM7TDMI -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\adc.o --depend .\ram\adc.d)
+I (adc.h)(0x546C535D)
+I (C:\Keil\ARM\Inc\Atmel\SAM7X\AT91SAM7X256.H)(0x527374BE)
+F (.\Abstract.txt)(0x54326A04)()

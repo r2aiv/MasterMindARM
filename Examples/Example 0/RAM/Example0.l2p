@@ -1,0 +1,8 @@
+--cpu ARM7TDMI
+".\ram\sam7.o"
+".\ram\retarget.o"
+".\ram\main_code.o"
+--library_type=microlib --scatter ".\RAM\Example0.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\RAM\Example0.map" -o .\RAM\Example0.axf

@@ -1,0 +1,6 @@
+;#<FEEDBACK># ARM Linker, 5040049: Last Updated: Mon Oct 06 19:21:52 2014
+;VERSION 0.2
+;FILE blinky.o
+delay_us <= USED 0
+;FILE retarget.o
+_sys_exit <= USED 0

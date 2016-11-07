@@ -1,0 +1,18 @@
+Dependencies for Project 'PROJECT_ARM', Target 'SAM7X Flash - ULINK': (DO NOT MODIFY !)
+F (.\SAM7.s)(0x54329509)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --pd "__MICROLIB SETA 1"-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Atmel\SAM7X-o .\flash\sam7.o --depend .\flash\sam7.d)
+F (.\Retarget.c)(0x54329508)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Atmel\SAM7X-o .\flash\retarget.o --depend .\flash\retarget.d)
+I (C:\Keil_v5\ARM\ARMCC\include\rt_misc.h)(0x52FE26DE)
+F (.\main_code.c)(0x5432BA14)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Atmel\SAM7X-o .\flash\main_code.o --depend .\flash\main_code.d)
+I (include/AT91SAM7X256.H)(0x54329509)
+I (include/lib_AT91SAM7X256.h)(0x54329509)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.H)(0x52FE26DE)
+I (C:\Keil_v5\ARM\ARMCC\include\math.H)(0x52FE26DE)
+I (lcd.h)(0x54329506)
+I (adc.h)(0x54329509)
+I (delay.h)(0x54329509)
+F (.\delay.c)(0x54329509)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Atmel\SAM7X-o .\flash\delay.o --depend .\flash\delay.d)
+I (delay.h)(0x54329509)
+F (.\lcd.c)(0x5432BA1E)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Atmel\SAM7X-o .\flash\lcd.o --depend .\flash\lcd.d)
+I (include\at91sam7x256.h)(0x54329509)
+I (lcd.h)(0x54329506)
+F (.\Abstract.txt)(0x54329509)()

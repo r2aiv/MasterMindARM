@@ -1,0 +1,7 @@
+Dependencies for Project 'Example0', Target 'SAM7X RAM - ULINK': (DO NOT MODIFY !)
+F (.\SAM7.s)(0x54327814)(--cpu ARM7TDMI -g --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\sam7.o --depend .\ram\sam7.d)
+F (.\Retarget.c)(0x54327814)(-c --cpu ARM7TDMI -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\retarget.o --depend .\ram\retarget.d)
+I (C:\Keil\ARM\ARMCC\include\rt_misc.h)(0x52FE34EE)
+F (.\main_code.c)(0x5432CA92)(-c --cpu ARM7TDMI -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\main_code.o --depend .\ram\main_code.d)
+I (include\AT91SAM7X256.H)(0x54327814)
+F (.\Abstract.txt)(0x54327814)()

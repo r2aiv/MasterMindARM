@@ -1,0 +1,1 @@
+Projekt demonstrujacy uzycie wyswietlacza LCD za pomoca zalaczonej biblioteki "lcd.c".

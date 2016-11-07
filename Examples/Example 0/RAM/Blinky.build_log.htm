@@ -1,0 +1,49 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\Dane\Dokumenty\SVN dydaktyka\Mechatronika\SWwUS\wyklady\przyklady do wykladu\ARM-SAM7X-256_Example0 - HelloWorld\Example0.uvproj
+Project File Date:  10/06/2014
+
+<h2>Output:</h2>
+Build target 'SAM7X RAM - ULINK'
+Clean started - Project: 'Example0'
+   deleting intermediate output files for target 'SAM7X RAM - ULINK'
+assembling SAM7.s...
+compiling Retarget.c...
+compiling main_code.c...
+linking...
+Program Size: Code=536 RO-data=32 RW-data=12 ZI-data=1164  
+".\RAM\Example0.axf" - 0 Error(s), 0 Warning(s).
+
+*** Performing Cross-Module-Optimization:
+compiling Retarget.c...
+linking...
+Program Size: Code=536 RO-data=32 RW-data=12 ZI-data=1164  
+FromELF: creating hex file...
+".\RAM\Example0.axf" - 0 Error(s), 0 Warning(s).
+*** Completed Cross-Module-Optimization after 2 iteration(s).
+formation to produce a FEEDBACK file.
+Finished: 1 information, 0 warning and 1 error messages.
+".\RAM\Blinky.axf" - 1 Error(s), 2 Warning(s).
+
+*** Performing Cross-Module-Optimization:
+*** Feedback file '.\RAM\Blinky.fed' not found.
+Target not created
+eclared but never referenced
+        int li; //definicje zmiennych lokalnych funkcji main()
+main_code.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=536 RO-data=32 RW-data=12 ZI-data=1164  
+compiling Retarget.c...
+compiling main_code.c...
+main_code.c(13): warning:  #940-D: missing return statement at end of non-void function "sendchar"
+  {};
+main_code.c(17): warning:  #177-D: variable "li" was declared but never referenced
+        int li; //definicje zmiennych lokalnych funkcji main()
+main_code.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=536 RO-data=32 RW-data=12 ZI-data=1164  
+".\RAM\Blinky.axf" - 0 Error(s), 2 Warning(s).
+*** Completed Cross-Module-Optimization after 3 iteration(s).

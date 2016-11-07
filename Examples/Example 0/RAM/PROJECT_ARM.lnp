@@ -1,0 +1,10 @@
+--cpu ARM7TDMI
+".\ram\sam7.o"
+".\ram\retarget.o"
+".\ram\main_code.o"
+--library_type=microlib
+--feedback ".\RAM\PROJECT_ARM.fed" --feedback_image=none
+--scatter ".\RAM\PROJECT_ARM.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\RAM\PROJECT_ARM.map" -o .\RAM\PROJECT_ARM.axf

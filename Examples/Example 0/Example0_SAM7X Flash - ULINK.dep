@@ -1,0 +1,7 @@
+Dependencies for Project 'Example0', Target 'SAM7X Flash - ULINK': (DO NOT MODIFY !)
+F (.\SAM7.s)(0x5432A322)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --pd "__MICROLIB SETA 1"-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Atmel\SAM7X-o .\flash\sam7.o --depend .\flash\sam7.d)
+F (.\Retarget.c)(0x5432A324)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Atmel\SAM7X-o .\flash\retarget.o --depend .\flash\retarget.d)
+I (C:\Keil_v5\ARM\ARMCC\include\rt_misc.h)(0x52FE34EE)
+F (.\main_code.c)(0x5432C927)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-I C:\Keil_v5\ARM\RV31\INC-I C:\Keil_v5\ARM\CMSIS\Include-I C:\Keil_v5\ARM\Inc\Atmel\SAM7X-o .\flash\main_code.o --depend .\flash\main_code.d)
+I (include\AT91SAM7X256.H)(0x5432A323)
+F (.\Abstract.txt)(0x5432A323)()

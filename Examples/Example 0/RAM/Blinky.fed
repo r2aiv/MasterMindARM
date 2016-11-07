@@ -1,0 +1,5 @@
+;#<FEEDBACK># ARM Linker, 5.03 [Build 76]: Last Updated: Mon Oct 06 10:48:11 2014
+;VERSION 0.2
+;FILE main_code.o
+;FILE retarget.o
+_sys_exit <= USED 0

@@ -1,0 +1,5 @@
+;#<FEEDBACK># ARM Linker, 5040049: Last Updated: Tue Oct 07 09:33:15 2014
+;VERSION 0.2
+;FILE main_code.o
+;FILE retarget.o
+_sys_exit <= USED 0

@@ -1,0 +1,2 @@
+Tu mozna wpisywac informacje na temat projektu.
+Te pliki nie beda kompilowane.
