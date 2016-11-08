@@ -1,0 +1,13 @@
+Dependencies for Project 'Blinky', Target 'SAM7X RAM - ULINK': (DO NOT MODIFY !)
+F (.\SAM7.s)(0x5162B4E8)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\sam7.o --depend .\ram\sam7.d)
+F (.\Retarget.c)(0x5162B4E8)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\retarget.o --depend .\ram\retarget.d)
+I (C:\Keil\ARM\ARMCC\include\rt_misc.h)(0x51C80BA4)
+F (.\delay.c)(0x5260DBB8)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\delay.o --depend .\ram\delay.d)
+I (E:\Dane\Dokumenty\SVN dydaktyka\Informatyka\Systemy wbudowane\przyklady w C\ARM-SAM7X-256_Example4 - LCD\delay.h)(0x5260D99B)
+F (.\lcd.c)(0x5260E028)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\lcd.o --depend .\ram\lcd.d)
+I (C:\Keil\ARM\Inc\Atmel\SAM7X\at91sam7x256.h)(0x51C80D8E)
+I (E:\Dane\Dokumenty\SVN dydaktyka\Informatyka\Systemy wbudowane\przyklady w C\ARM-SAM7X-256_Example4 - LCD\lcd.h)(0x4F01A54A)
+F (.\Blinky.c)(0x5267A211)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O0-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Atmel\SAM7X-o .\ram\blinky.o --depend .\ram\blinky.d)
+I (C:\Keil\ARM\Inc\Atmel\SAM7X\AT91SAM7X256.H)(0x51C80D8E)
+I (E:\Dane\Dokumenty\SVN dydaktyka\Informatyka\Systemy wbudowane\przyklady w C\ARM-SAM7X-256_Example4 - LCD\lcd.h)(0x4F01A54A)
+F (.\Abstract.txt)(0x5162B4E8)()

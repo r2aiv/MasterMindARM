@@ -74,6 +74,7 @@
 // **************************************
 #include "at91sam7x256.h"
 #include "lcd.h"
+#include "bmp.h"
 #include <inttypes.h>	 //typy jednolite danych
 
 
@@ -296,6 +297,51 @@ void InitLcd(void) {
   // turn on the display
  WriteSpiCommand(DISON);
 }
+
+// *****************************************************************************
+// LCDWrite130x130bmp.c
+//
+// Writes the entire screen from a bmp file
+// Uses Olimex BmpToArray.exe utility
+//
+// Inputs: picture in bmp.h
+//
+// Author: Olimex, James P Lynch August 30, 2007
+// *****************************************************************************
+void LCDWrite130x130bmp(void) {
+
+ long j; // loop counter
+
+// Data control (need to set "normal" page address for Olimex photograph)
+ WriteSpiCommand(DATCTL);
+WriteSpiData(0x00); // P1: 0x00 = page address normal, column address normal, address scan in column direction
+WriteSpiData(0x00); // P2: 0x00 = RGB sequence (default value)
+WriteSpiData(0x02); // P3: 0x02 = Grayscale -> 16
+// Display OFF
+ WriteSpiCommand(DISOFF);
+// Column address set (command 0x2A)
+ WriteSpiCommand(CASET);
+ WriteSpiData(0);
+ WriteSpiData(131);
+// Page address set (command 0x2B)
+ WriteSpiCommand(PASET);
+ WriteSpiData(0);
+ WriteSpiData(131);
+
+// WRITE MEMORY
+ WriteSpiCommand(RAMWR);
+for(j = 0; j < 25740; j++) {
+ WriteSpiData(bmp[j]);
+ }
+
+// Data control (return to "inverted" page address)
+ WriteSpiCommand(DATCTL);
+WriteSpiData(0x01); // P1: 0x01 = page address inverted, column address normal, address scan in column direction
+WriteSpiData(0x00); // P2: 0x00 = RGB sequence (default value)
+WriteSpiData(0x02); // P3: 0x02 = Grayscale -> 16
+// Display On
+ WriteSpiCommand(DISON);
+} 
 
 
 //  *****************************************************************************

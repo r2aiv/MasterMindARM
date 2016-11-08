@@ -1,0 +1,14 @@
+;#<FEEDBACK># ARM Linker, 5.03 [Build 76]: Last Updated: Wed Oct 23 10:39:56 2013
+;VERSION 0.2
+;FILE blinky.o
+;FILE delay.o
+delay_s <= USED 0
+;FILE lcd.o
+Backlight <= USED 0
+LCDPutChar <= USED 0
+LCDPutStr <= USED 0
+LCDSetCircle <= USED 0
+LCDSetLine <= USED 0
+LCDSetRect <= USED 0
+;FILE retarget.o
+_sys_exit <= USED 0

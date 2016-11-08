@@ -1,0 +1,5 @@
+-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O0
+-I C:\Keil\ARM\RV31\INC
+-I C:\Keil\ARM\CMSIS\Include
+-I C:\Keil\ARM\Inc\Atmel\SAM7X
+-o .\ram\lcd.o --depend .\ram\lcd.d --feedback ".\RAM\Blinky.fed" "lcd.c"

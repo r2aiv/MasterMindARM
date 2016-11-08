@@ -1,0 +1,5 @@
+-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2
+-I C:\Keil\ARM\RV31\INC
+-I C:\Keil\ARM\CMSIS\Include
+-I C:\Keil\ARM\Inc\Atmel\SAM7X
+-o .\flash\retarget.o --depend .\flash\retarget.d --feedback ".\Flash\Blinky.fed" "Retarget.c"
