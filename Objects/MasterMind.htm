@@ -3,17 +3,24 @@
 <title>Static Call Graph - [.\Objects\MasterMind.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\MasterMind.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Tue Nov 08 19:50:44 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Tue Nov 08 20:29:58 2016
 <BR><P>
-<H3>Maximum Stack Usage =        132 bytes + Unknown(Functions without stacksize, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        140 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-main &rArr; helloScreen &rArr; menuScreen &rArr; LCDPutStr &rArr; LCDPutChar &rArr; WriteSpiData
+main &rArr; helloScreen &rArr; menuScreen &rArr; optionScreen &rArr;  menuScreen (Cycle)
 <P>
 <H3>
 Functions with no stack information
 </H3><UL>
  <LI><a href="#[13]">__user_initial_stackheap</a>
 </UL>
+</UL>
+<P>
+<H3>
+Mutually Recursive functions
+</H3> <LI><a href="#[23]">optionScreen</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[20]">menuScreen</a><BR>
+ <LI><a href="#[22]">highScoreScreen</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[20]">menuScreen</a><BR>
+ <LI><a href="#[1f]">gameScreen</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[20]">menuScreen</a><BR>
 </UL>
 <P>
 <H3>
@@ -208,7 +215,7 @@ Global Symbols
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteSpiCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
-<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<LI><a href="#[21]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
 </UL>
 
 <P><STRONG><a name="[4d]"></a>__semihosting_library_function</STRONG> (ARM, 0 bytes, Stack size 4 bytes, indicate_semi.o(.text), UNUSED)
@@ -227,8 +234,11 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
-<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;optionScreen
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
+<LI><a href="#[22]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;highScoreScreen
+<LI><a href="#[21]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
 </UL>
 
 <P><STRONG><a name="[1b]"></a>LCDSetLine</STRONG> (ARM, 240 bytes, Stack size 52 bytes, lcd.o(i.LCDSetLine))
@@ -264,7 +274,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteSpiData
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteSpiCommand
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<BR>[Called By]<UL><LI><a href="#[21]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
 </UL>
 
 <P><STRONG><a name="[17]"></a>WriteSpiCommand</STRONG> (ARM, 68 bytes, Stack size 4 bytes, lcd.o(i.WriteSpiCommand))
@@ -287,12 +297,18 @@ Global Symbols
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClearScreen
 </UL>
 
-<P><STRONG><a name="[21]"></a>gameScreen</STRONG> (ARM, 4 bytes, Stack size 0 bytes, main.o(i.gameScreen))
-<BR><BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
+<P><STRONG><a name="[1f]"></a>gameScreen</STRONG> (ARM, 72 bytes, Stack size 8 bytes, main.o(i.gameScreen))
+<BR><BR>[Stack]<UL><LI>Max Depth = 124 + In Cycle
+<LI>Call Chain = gameScreen &rArr;  menuScreen (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutStr
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
 </UL>
 
-<P><STRONG><a name="[1f]"></a>helloScreen</STRONG> (ARM, 92 bytes, Stack size 8 bytes, main.o(i.helloScreen))
-<BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = helloScreen &rArr; menuScreen &rArr; LCDPutStr &rArr; LCDPutChar &rArr; WriteSpiData
+<P><STRONG><a name="[21]"></a>helloScreen</STRONG> (ARM, 92 bytes, Stack size 8 bytes, main.o(i.helloScreen))
+<BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = helloScreen &rArr; menuScreen &rArr; optionScreen &rArr;  menuScreen (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDWrite130x130bmp
 <LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutStr
@@ -302,32 +318,47 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[22]"></a>highScoreScreen</STRONG> (ARM, 4 bytes, Stack size 0 bytes, main.o(i.highScoreScreen))
-<BR><BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
+<P><STRONG><a name="[22]"></a>highScoreScreen</STRONG> (ARM, 72 bytes, Stack size 8 bytes, main.o(i.highScoreScreen))
+<BR><BR>[Stack]<UL><LI>Max Depth = 124 + In Cycle
+<LI>Call Chain = highScoreScreen &rArr;  menuScreen (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutStr
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
 </UL>
 
 <P><STRONG><a name="[2]"></a>main</STRONG> (ARM, 40 bytes, Stack size 0 bytes, main.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = main &rArr; helloScreen &rArr; menuScreen &rArr; LCDPutStr &rArr; LCDPutChar &rArr; WriteSpiData
+<BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = main &rArr; helloScreen &rArr; menuScreen &rArr; optionScreen &rArr;  menuScreen (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<BR>[Calls]<UL><LI><a href="#[21]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> __rtentry2.o(.ARM.Collect$$rtentry$$0000000D)
 </UL>
 <P><STRONG><a name="[20]"></a>menuScreen</STRONG> (ARM, 520 bytes, Stack size 8 bytes, main.o(i.menuScreen))
-<BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = menuScreen &rArr; LCDPutStr &rArr; LCDPutChar &rArr; WriteSpiData
+<BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = menuScreen &rArr; optionScreen &rArr;  menuScreen (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDSetRect
 <LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutStr
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClearScreen
 <LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;optionScreen
 <LI><a href="#[22]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;highScoreScreen
-<LI><a href="#[21]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
+<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;optionScreen
+<LI><a href="#[22]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;highScoreScreen
+<LI><a href="#[21]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
 </UL>
 
-<P><STRONG><a name="[23]"></a>optionScreen</STRONG> (ARM, 4 bytes, Stack size 0 bytes, main.o(i.optionScreen))
-<BR><BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
+<P><STRONG><a name="[23]"></a>optionScreen</STRONG> (ARM, 72 bytes, Stack size 8 bytes, main.o(i.optionScreen))
+<BR><BR>[Stack]<UL><LI>Max Depth = 124 + In Cycle
+<LI>Call Chain = optionScreen &rArr;  menuScreen (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutStr
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
 </UL>
 <P>
 <H3>

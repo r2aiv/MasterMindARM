@@ -1,7 +1,15 @@
 #include <AT91SAM7X256.H>
 #include <inttypes.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "lcd.h"
 #include "adc.h"
+
+/**** DEFINITION OF BOLEAN TYPE ****/
+typedef int bool;
+#define true 1
+#define false 0
 
 /**** FUNCTIONS DECLARATIONS ****/
 extern void InitSpi(void);
@@ -25,12 +33,21 @@ extern void Delay (unsigned long a);
 extern void delay_ms(unsigned int ms);
 extern void LCDWrite130x130bmp(void);
 
+//STATES OF PROGRAM
 void helloScreen(void);
 void menuScreen(void);
 void gameScreen(void);
 void optionScreen(void);
 void highScoreScreen(void);
+
+//GAME LOGIC
+void generateNumbers();
 /**** END OF FUNCTIONS DECLARATION ****/
+
+/**** GLOBAL VARIABLE DECLARATION ****/
+bool flagArray[9];
+int array[5];
+
 
 int main(void){
 	//Enable clock of the PIO
@@ -72,6 +89,8 @@ int main(void){
 	#define JOY_PUSH_DOWN (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA9) == 1)
 	#define JOY_PUSHED (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA8) == 1)
 	
+	srand(time(0));
+	
 	helloScreen();
 }
 
@@ -108,21 +127,18 @@ void menuScreen(void){
 		switch(currentOption){
 			case 0:
 				//TODO: starting new game
-				//TODO: drawing rectangle on the new game option
 				if(runOption)
 					gameScreen();
 				LCDSetRect(100, 60, 80, 40, NOFILL, RED);
 				break;
 			case 1:
 				//TODO: opening highscores
-				//TODO: drawing rectangle on the highscore option
 				if(runOption)
 					highScoreScreen();
 				LCDSetRect(80, 60, 60, 40, NOFILL, RED);
 				break;
 			case 2:
 				//TODO: opening options
-				//TODO: drawing rectangle on the options option ;)
 				if(runOption)
 					optionScreen();
 				LCDSetRect(60, 60, 40, 40, NOFILL, RED);
@@ -145,11 +161,22 @@ void menuScreen(void){
 }
 
 void gameScreen (void){
+	//TODO: handling of win
 	while(1){
 		LCDPutStr("GRA", 120, 70, SMALL, BLACK, RED);
 		
 		if(RIGHT_KEY_DOWN)
 			menuScreen();
+	}
+}
+
+void generateNumbers(){
+	for(int i = 0; i < 5; i++){
+		do{
+			array[i] = (rand() % 9) + 1;
+		}
+		while(flagArray[array[i]] == true);
+		flagArray[array[i]] = true;
 	}
 }
 
