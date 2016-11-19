@@ -1,15 +1,21 @@
 #include <AT91SAM7X256.H>
-#include <inttypes.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "lcd.h"
-#include "adc.h"
 
 /**** DEFINITION OF BOLEAN TYPE ****/
 typedef int bool;
 #define true 1
 #define false 0
+
+/**** DEFINITION OF COLORS ENUM ****/
+enum colors {WHITE_COLOR, BLACK_COLOR, RED_COLOR, GREEN_COLOR, BLUE_COLOR, CYAN_COLOR, MAGENTA_COLOR, YELLOW_COLOR, BROWN_COLOR, ORANGE_COLOR, PINK_COLOR};
+
+/**** DEFINITION OF GUESSING TYPE ****/
+typedef int guess;
+#define BAD 0
+#define COLOR 1
+#define GOOD 2
 
 /**** FUNCTIONS DECLARATIONS ****/
 extern void InitSpi(void);
@@ -29,9 +35,8 @@ extern void LCDPutChar(char c, int  x, int  y, int size, int fcolor, int bcolor)
 extern void LCDPutString (char *lcd_string, const char *font_style, unsigned char x, unsigned char y,
                    unsigned char fcolor, unsigned char bcolor);
 extern void LCDPutStr(char *pString, int  x, int  y, int Size, int fColor, int bColor);
-extern void Delay (unsigned long a);
 extern void delay_ms(unsigned int ms);
-extern void LCDWrite130x130bmp(void);
+//extern void LCDWrite130x130bmp(void);
 
 //STATES OF PROGRAM
 void helloScreen(void);
@@ -39,14 +44,22 @@ void menuScreen(void);
 void gameScreen(void);
 void optionScreen(void);
 void highScoreScreen(void);
+void winScreen(void);
+
+//DRAWING FUNCTIONS
+void drawColouredDot(int color, int x, int y);
 
 //GAME LOGIC
-void generateNumbers();
+void generateNumbers(void);
+void clearCurentTab(void);
+bool checkValues(void);
 /**** END OF FUNCTIONS DECLARATION ****/
 
 /**** GLOBAL VARIABLE DECLARATION ****/
 bool flagArray[9];
-int array[5];
+int targetArray[5];
+int currentArray[5];
+guess ifWinArray[5];
 
 
 int main(void){
@@ -97,11 +110,10 @@ int main(void){
 
 
 //TODO: add visual efects. Some kind of gradient
-//TODO: add continuing by pressing button
 void helloScreen(void){
 	LCDClearScreen();
 	LED_BCK_ON;	
-	LCDWrite130x130bmp();
+	//LCDWrite130x130bmp();
 	LCDPutStr("START", 10, 0, SMALL, BLACK, RED);
 	
 	while(1)
@@ -162,22 +174,119 @@ void menuScreen(void){
 
 void gameScreen (void){
 	//TODO: handling of win
+	
+	int currentOption = 0;
+	
+	//INITIALIZATION
+	generateNumbers();
+	drawColouredDot(1, 10, 5);
+	drawColouredDot(1, 10, 25);
+	drawColouredDot(1, 10, 45);
+	drawColouredDot(1, 10, 65);
+	drawColouredDot(1, 10, 85);
+	
+	
 	while(1){
-		LCDPutStr("GRA", 120, 70, SMALL, BLACK, RED);
+		//LCDPutStr("GRA", 120, 70, SMALL, BLACK, RED);
+		
+		drawColouredDot(currentArray[0], 10, 5);
+		drawColouredDot(currentArray[1], 10, 25);
+		drawColouredDot(currentArray[2], 10, 45);
+		drawColouredDot(currentArray[3], 10, 65);
+		drawColouredDot(currentArray[4], 10, 85);
+		
+		if(JOY_PUSH_DOWN)
+			if((currentArray[currentOption] < 5) && (currentArray[currentOption] > 0))
+				currentArray[currentOption]++;
+		
+		if(JOY_PUSH_DOWN)
+			if((currentArray[currentOption] < 5) && (currentArray[currentOption] > 0))
+				currentArray[currentOption]--;
+			
+		if(JOY_PUSH_LEFT)
+			if((currentOption < 5) && (currentOption > 0))
+				currentOption--;
+		
+		if(JOY_PUSH_RIGHT)
+			if((currentOption < 5) && (currentOption > 0))
+				currentOption++;
+				
+		if(LEFT_KEY_DOWN){
+			if(checkValues()){
+				winScreen();
+				return;
+			}
+			else{
+				//drawing result array
+				//drawing last choice
+			}
+		}
 		
 		if(RIGHT_KEY_DOWN)
-			menuScreen();
+			return;
+	}
+	
+}
+
+//TODO implement
+void winScreen(void){
+	while(1){
+		LCDPutStr("WYGRALES", 120, 70, SMALL, BLACK, RED);
+		if(RIGHT_KEY_DOWN)
+			return;
 	}
 }
 
-void generateNumbers(){
-	for(int i = 0; i < 5; i++){
+void generateNumbers(void){
+	int i;
+	
+	for(i = 0; i < 5; i++){
 		do{
-			array[i] = (rand() % 9) + 1;
+			targetArray[i] = (rand() % 9) + 1;
 		}
-		while(flagArray[array[i]] == true);
-		flagArray[array[i]] = true;
+		while(flagArray[targetArray[i]] == true);
+		flagArray[targetArray[i]] = true;
 	}
+}
+
+//TODO - implement
+void drawColouredDot(int color, int x, int y){
+	LCDSetCircle(x, y, 10, color);	
+}
+
+//TODO - implement
+bool checkValues(void){
+	int i, j;
+	int ifWinArrayIndex = 0;
+	//checking color and place of dots
+	for(i = 0; i < 5; i++){
+		//checking good position
+		if(currentArray[i] == targetArray[i]){
+			ifWinArray[ifWinArrayIndex] = GOOD;
+			ifWinArrayIndex++;
+		}
+		else{
+			for(j = 0; j < 5; j++){
+				//checking good color
+				if(currentArray[i] == targetArray[j]){
+					ifWinArray[ifWinArrayIndex] = COLOR;
+					ifWinArrayIndex++;
+				}
+			}
+		}
+	}
+	
+	//checking targetArray
+	for(i = 0; i < 5; i++){
+		if(ifWinArray[i] != GOOD)
+			return false;
+	}
+	return true;
+}
+
+//TODO - implement
+void clearCurentTab(void){
+	
 }
 
 void highScoreScreen(void){
@@ -186,6 +295,7 @@ void highScoreScreen(void){
 		
 		if(RIGHT_KEY_DOWN)
 			menuScreen();
+			//return;
 	}
 }
 
@@ -195,5 +305,6 @@ void optionScreen(void){
 		
 		if(RIGHT_KEY_DOWN)
 			menuScreen();
+			//return;
 	}
 }

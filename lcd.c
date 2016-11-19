@@ -74,7 +74,7 @@
 // **************************************
 #include "at91sam7x256.h"
 #include "lcd.h"
-#include "bmp.h"
+//#include "bmp.h"
 #include <inttypes.h>	 //typy jednolite danych
 
 
@@ -308,7 +308,7 @@ void InitLcd(void) {
 //
 // Author: Olimex, James P Lynch August 30, 2007
 // *****************************************************************************
-void LCDWrite130x130bmp(void) {
+/*void LCDWrite130x130bmp(void) {
 
  long j; // loop counter
 
@@ -342,7 +342,7 @@ WriteSpiData(0x02); // P3: 0x02 = Grayscale -> 16
 // Display On
  WriteSpiCommand(DISON);
 } 
-
+*/
 
 //  *****************************************************************************
 //          LCDClearScreen.c

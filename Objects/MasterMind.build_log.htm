@@ -27,11 +27,18 @@ Project File Date:  11/07/2016
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 3 (build 300)', folder: 'F:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Target 1'
-compiling main.c...
+compiling lcd.c...
+lcd.c(156): warning:  #61-D: integer operation result is out of range
+        (
+T91C_SPI_DLYBCS & (0 << 24)) |    // Delay between chip selects (take default: 6 MCK periods)
+lcd.c(167): warning:  #61-D: integer operation result is out of range
+        (
+T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
+lcd.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=3108 RO-data=29284 RW-data=20 ZI-data=1260  
-".\Objects\MasterMind.axf" - 0 Error(s), 0 Warning(s).
-Build Time Elapsed:  00:00:04
+Program Size: Code=4648 RO-data=3148 RW-data=20 ZI-data=1580  
+".\Objects\MasterMind.axf" - 0 Error(s), 2 Warning(s).
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
