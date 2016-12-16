@@ -91,18 +91,25 @@ int main(void){
 
 	#define SPEAKER_SET		LED_PIO->PIO_SODR = AT91C_PIO_PB19
 	#define SPEAKER_CLR		LED_PIO->PIO_CODR = AT91C_PIO_PB19
+   InitSpi();
+
+  // Init LCD
+   InitLcd();
+
+	// clear the screen
+   LCDClearScreen();
 	
-	LED_INIT;
+
 	
 	#define LEFT_KEY_DOWN (((AT91C_BASE_PIOB -> PIO_PDSR) & AT91C_PIO_PB24) == 0)
 	#define RIGHT_KEY_DOWN (((AT91C_BASE_PIOB -> PIO_PDSR) & AT91C_PIO_PB25) == 0)
-	#define JOY_PUSH_LEFT (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA7) == 1)
-	#define JOY_PUSH_RIGHT (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA15) == 1)
-	#define JOY_PUSH_UP (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA14) == 1)
-	#define JOY_PUSH_DOWN (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA9) == 1)
-	#define JOY_PUSHED (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA8) == 1)
+	#define JOY_PUSH_LEFT (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA7) == 0)
+	#define JOY_PUSH_RIGHT (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA14) == 0)
+	#define JOY_PUSH_UP (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA15) == 0)
+	#define JOY_PUSH_DOWN (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA9) == 0)
+	#define JOY_PUSHED (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA8) == 0)
 	
-	srand(time(0));
+	//srand(time(0));
 	
 	helloScreen();
 }
@@ -114,57 +121,69 @@ void helloScreen(void){
 	LCDClearScreen();
 	LED_BCK_ON;	
 	//LCDWrite130x130bmp();
-	LCDPutStr("START", 10, 0, SMALL, BLACK, RED);
-	
+	LCDPutStr("MASTERMIND", 35, 25, LARGE, BLACK, RED);
+	//TODO dodac jakie wizualne efekty
 	while(1)
-	if(LEFT_KEY_DOWN){
+	if(LEFT_KEY_DOWN || JOY_PUSH_UP || JOY_PUSH_DOWN ){
 		menuScreen();
 	}
 }
 
 
 void menuScreen(void){
-	int currentOption = 0;
-	int runOption = 0;
-	
+	volatile int currentOption = 0;
+	volatile int runOption = 0;
+	LCDClearScreen();
 	while(1){
-		LCDClearScreen();
 		
-		LCDPutStr("MENU", 120, 70, SMALL, BLACK, RED);
-		LCDPutStr("1.NOWA GRA", 100, 60, SMALL, BLACK, RED);
-		LCDPutStr("2.NAJLEPSZE WYNIKI", 80, 60, SMALL, BLACK, RED);
-		LCDPutStr("3.OPCJE", 60, 60, SMALL, BLACK, RED);
-		LCDPutStr("WYBIERZ", 10, 0, SMALL, BLACK, RED);
+		
+		LCDPutStr("MENU", 20, 50, SMALL, BLACK, RED);
+		LCDPutStr("1.NOWA GRA", 50, 10, SMALL, BLACK, RED);
+		LCDPutStr("2.NAJLEPSZE WYNIKI", 70, 10, SMALL, BLACK, RED);
+		LCDPutStr("3.OPCJE", 90, 10, SMALL, BLACK, RED);
+		LCDPutStr("WYBIERZ", 120, 0, SMALL, BLACK, RED);
 		
 		switch(currentOption){
 			case 0:
 				//TODO: starting new game
 				if(runOption)
 					gameScreen();
-				LCDSetRect(100, 60, 80, 40, NOFILL, RED);
+			//	LCDSetRect(50, 10, 70, 20, NOFILL, BLUE);
+				LCDSetCircle(53, 5,3, YELLOW);
 				break;
 			case 1:
 				//TODO: opening highscores
 				if(runOption)
 					highScoreScreen();
-				LCDSetRect(80, 60, 60, 40, NOFILL, RED);
+				//LCDSetRect(70, 10, 90, 20, NOFILL, BLUE);
+				LCDSetCircle(73, 5,3, RED);
 				break;
 			case 2:
 				//TODO: opening options
 				if(runOption)
 					optionScreen();
-				LCDSetRect(60, 60, 40, 40, NOFILL, RED);
+				//LCDSetRect(90, 10, 110, 20, NOFILL, BLUE);
+				LCDSetCircle(93, 5,3, RED);
 				break;
 		}
 		
-		if(JOY_PUSH_UP){
-			if(currentOption < 3)
+		if(JOY_PUSH_UP || JOY_PUSH_RIGHT){
+			if(currentOption < 2)
 				currentOption++;
+				delay_ms(50);
+				LCDClearScreen();
+			
 		}
-		else if(JOY_PUSH_DOWN){
+		if(JOY_PUSH_DOWN || JOY_PUSH_LEFT){
 			if(currentOption > 0)
 				currentOption--;
+				delay_ms(50);
+				LCDClearScreen();
 		}
+		if(RIGHT_KEY_DOWN)
+			//return;
+			helloScreen();
+		
 		else if(JOY_PUSHED || LEFT_KEY_DOWN){
 			runOption = 1;
 		}	
@@ -174,7 +193,7 @@ void menuScreen(void){
 
 void gameScreen (void){
 	//TODO: handling of win
-	
+	LCDClearScreen();
 	int currentOption = 0;
 	
 	//INITIALIZATION
@@ -223,7 +242,8 @@ void gameScreen (void){
 		}
 		
 		if(RIGHT_KEY_DOWN)
-			return;
+			//return;
+		helloScreen();
 	}
 	
 }
@@ -233,7 +253,8 @@ void winScreen(void){
 	while(1){
 		LCDPutStr("WYGRALES", 120, 70, SMALL, BLACK, RED);
 		if(RIGHT_KEY_DOWN)
-			return;
+		//	return;
+		helloScreen();
 	}
 }
 
@@ -242,7 +263,7 @@ void generateNumbers(void){
 	
 	for(i = 0; i < 5; i++){
 		do{
-			targetArray[i] = (rand() % 9) + 1;
+			targetArray[i] = 1;//(rand() % 9) + 1;
 		}
 		while(flagArray[targetArray[i]] == true);
 		flagArray[targetArray[i]] = true;
