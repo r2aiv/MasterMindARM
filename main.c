@@ -48,7 +48,8 @@ void winScreen(void);
 void authorScreen(void);
 
 //DRAWING FUNCTIONS
-void drawColouredDot(int color, int x, int y);
+void drawColouredDot(int color, int x, int y); //TODO: correct
+void drawGameNet(void);
 
 //GAME LOGIC
 void generateNumbers(void);
@@ -62,66 +63,53 @@ int targetArray[5];
 int currentArray[5];
 guess ifWinArray[5];
 
+/**** LED DEFINE INIT ****/
+//TODO lines 67-81 -> dead code
+#define LED_PIO		AT91C_BASE_PIOB			//adres kontrolera PIOB
+#define LED_MASK	(AT91C_PIO_PB21|AT91C_PIO_PB20) 
+
+	
+/*LED_INIT = 	przejecie kontroli przez PIO nad liniami wyjscia
+							ustawienie pinow jako wyjscia
+							odblokowanie mozliwosc zapisu za pomoca rejestru ODSR
+*/
+	
+#define LED_INIT	{LED_PIO->PIO_PER = LED_MASK; LED_PIO->PIO_OER = LED_MASK; LED_PIO->PIO_OWER = LED_MASK;}
+#define LED_OFF 		LED_PIO->PIO_SODR = LED_MASK  //zgaszenie wszystkich diod
+#define LED_ON 		LED_PIO->PIO_CODR = LED_MASK      //zapalenie
+#define LED_TOG		LED_PIO->PIO_ODSR ^= LED_MASK     //zmiana stanu diod
+
+#define LED_BCK_OFF		LED_PIO->PIO_CODR = AT91C_PIO_PB20
+#define LED_BCK_ON		LED_PIO->PIO_SODR = AT91C_PIO_PB20
+
+/**** SPEAKER DEFINE INIT ****/
+
+#define SPEAKER_SET		LED_PIO->PIO_SODR = AT91C_PIO_PB19
+#define SPEAKER_CLR		LED_PIO->PIO_CODR = AT91C_PIO_PB19
+
+/**** OUTPUT DEFINE INIT ****/
+
+#define LEFT_KEY_DOWN (((AT91C_BASE_PIOB -> PIO_PDSR) & AT91C_PIO_PB24) == 0)
+#define RIGHT_KEY_DOWN (((AT91C_BASE_PIOB -> PIO_PDSR) & AT91C_PIO_PB25) == 0)
+#define JOY_PUSH_LEFT (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA7) == 0)
+#define JOY_PUSH_RIGHT (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA14) == 0)
+#define JOY_PUSH_UP (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA9) == 0)
+#define JOY_PUSH_DOWN (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA8) == 0)
+#define JOY_PUSHED (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA15) == 0)
 
 int main(void){
 	//Enable clock of the PIO
 	AT91C_BASE_PMC -> PMC_PCER = (1 << AT91C_ID_PIOA);
 	AT91C_BASE_PMC -> PMC_PCER = (1 << AT91C_ID_PIOB);
-	
-	#define LED_PIO		AT91C_BASE_PIOB			//adres kontrolera PIOB
+	InitSpi();
 
-	#define LED_MASK	(AT91C_PIO_PB21|AT91C_PIO_PB20) 
+	// Init LCD
+	InitLcd();
 
-		
-	/*LED_INIT = 	przejecie kontroli przez PIO nad liniami wyjscia
-								ustawienie pinow jako wyjscia
-								odblokowanie mozliwosc zapisu za pomoca rejestru ODSR
-	*/
-		
-	#define LED_INIT	{LED_PIO->PIO_PER = LED_MASK; LED_PIO->PIO_OER = LED_MASK; LED_PIO->PIO_OWER = LED_MASK;}
+	LCDClearScreen();
 
-
-	#define LED_OFF 		LED_PIO->PIO_SODR = LED_MASK  //zgaszenie wszystkich diod
-	#define LED_ON 		LED_PIO->PIO_CODR = LED_MASK      //zapalenie
-	#define LED_TOG		LED_PIO->PIO_ODSR ^= LED_MASK     //zmiana stanu diod
-
-
-
-	#define LED_BCK_OFF		LED_PIO->PIO_CODR = AT91C_PIO_PB20
-	#define LED_BCK_ON		LED_PIO->PIO_SODR = AT91C_PIO_PB20
-
-	#define SPEAKER_SET		LED_PIO->PIO_SODR = AT91C_PIO_PB19
-	#define SPEAKER_CLR		LED_PIO->PIO_CODR = AT91C_PIO_PB19
-   InitSpi();
-
-  // Init LCD
-   InitLcd();
-
-	// clear the screen
-   LCDClearScreen();
-	
-
-	
-	#define LEFT_KEY_DOWN (((AT91C_BASE_PIOB -> PIO_PDSR) & AT91C_PIO_PB24) == 0)
-	#define RIGHT_KEY_DOWN (((AT91C_BASE_PIOB -> PIO_PDSR) & AT91C_PIO_PB25) == 0)
-	#define JOY_PUSH_LEFT (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA7) == 0)//ok
-	#define JOY_PUSH_RIGHT (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA14) == 0)//ok
-	#define JOY_PUSH_UP (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA9) == 0)//nook -> pushed
-	#define JOY_PUSH_DOWN (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA8) == 0)//nook -> up
-	#define JOY_PUSHED (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA15) == 0)
-	
 	//srand(time(0));
-	
-	/*
-	 PA7 -> LEFT
-	 PA14 -> RIGHT
-	 PA15 -> PUSHED
-	 PA9 -> UP
-	 PA8 -> DOWN
-	
-	
-	*/
-	
+
 	helloScreen();
 }
 
@@ -159,28 +147,24 @@ void menuScreen(void){
 				//TODO: starting new game
 				if(runOption)
 					gameScreen();
-			//	LCDSetRect(50, 10, 70, 20, NOFILL, BLUE);
 				LCDSetCircle(53, 5,3, YELLOW);
 				break;
 			case 1:
 				//TODO: opening highscores
 				if(runOption)
 					highScoreScreen();
-				//LCDSetRect(70, 10, 90, 20, NOFILL, BLUE);
 				LCDSetCircle(73, 5,3, RED);
 				break;
 			case 2:
 				//TODO: opening options
 				if(runOption)
 					optionScreen();
-				//LCDSetRect(90, 10, 110, 20, NOFILL, BLUE);
 				LCDSetCircle(93, 5,3, RED);
 				break;
 			/*Author screen
 				case 3:
 				if(runOption)
 					authorScreen();
-				//LCDSetRect(90, 10, 110, 20, NOFILL, BLUE);
 				LCDSetCircle(93, 5,3, RED);
 				break;
 				*/
@@ -216,6 +200,7 @@ void gameScreen (void){
 	
 	LCDClearScreen();
 	
+	drawGameNet();
 	
 	//INITIALIZATION
 	//generateNumbers();
@@ -231,11 +216,7 @@ void gameScreen (void){
 	LCDSetCircle(117, 93, 10, RED);	
 	
 	LCDPutChar('1', 110, 9, LARGE, RED, BLACK); //znak w kole
-	
-	LCDSetLine(104, 0, 104, 130, YELLOW);
-	LCDSetLine(26, 105, 130, 105, YELLOW);
-	LCDSetLine(26, 0, 26, 130, YELLOW);
-	
+
 	LCDPutStr("CZAS: xxxx", 6, 5, SMALL, BLACK, RED);
 	LCDPutStr("ILOSC PROB: x", 16, 5, SMALL, BLACK, RED);
 	
@@ -252,8 +233,6 @@ void gameScreen (void){
 	//drawColouredDot(RED, 10, 85);
 	LCDSetCircle(91, 93, 10, RED);
 	
-	LCDSetLine(78, 0, 78, 130, YELLOW);
-	
 	//3 linia
 	LCDSetCircle(65, 13, 10, RED);	
 	//drawColouredDot(RED, 10, 25);
@@ -264,8 +243,6 @@ void gameScreen (void){
 	LCDSetCircle(65, 73, 10, RED);	
 	//drawColouredDot(RED, 10, 85);
 	LCDSetCircle(65, 93, 10, RED);
-	
-	LCDSetLine(52, 0, 52, 130, YELLOW);
 	
 	//4linia
 	LCDSetCircle(39, 13, 10, RED);	
@@ -296,7 +273,7 @@ void gameScreen (void){
 		drawColouredDot(currentArray[3], 10, 65);
 		drawColouredDot(currentArray[4], 10, 85);
 		*/
-		/*if(JOY_PUSH_DOWN)
+		/*if(JOY_PUSH_UP)
 			if((currentArray[currentOption] < 5) && (currentArray[currentOption] > 0))
 				currentArray[currentOption]++;
 		
@@ -330,7 +307,6 @@ void gameScreen (void){
 	
 }
 
-//TODO implement
 void winScreen(void){
 	while(1){
 		LCDPutStr("WYGRALES", 120, 70, SMALL, BLACK, RED);
@@ -424,4 +400,12 @@ void authorScreen(void){
 			menuScreen();
 			//return;
 	}
+}
+
+void drawGameNet(void){
+	LCDSetLine(104, 0, 104, 130, YELLOW);
+	LCDSetLine(26, 105, 130, 105, YELLOW);
+	LCDSetLine(26, 0, 26, 130, YELLOW);
+	LCDSetLine(78, 0, 78, 130, YELLOW);
+	LCDSetLine(52, 0, 52, 130, YELLOW);
 }

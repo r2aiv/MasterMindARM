@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Flash\Blinky.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Flash\Blinky.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Sun Dec 25 15:04:55 2016
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060300: Last Updated: Sun Dec 25 16:05:18 2016
 <BR><P>
 <H3>Maximum Stack Usage =        148 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -24,8 +24,8 @@ Functions with no stack information
 <P>
 <H3>
 Mutually Recursive functions
-</H3> <LI><a href="#[18]">menuScreen</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1b]">helloScreen</a><BR>
- <LI><a href="#[1a]">gameScreen</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1b]">helloScreen</a><BR>
+</H3> <LI><a href="#[18]">menuScreen</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1c]">helloScreen</a><BR>
+ <LI><a href="#[1b]">gameScreen</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1c]">helloScreen</a><BR>
  <LI><a href="#[19]">highScoreScreen</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[18]">menuScreen</a><BR>
  <LI><a href="#[17]">optionScreen</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[18]">menuScreen</a><BR>
  <LI><a href="#[1]">Undef_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1]">Undef_Handler</a><BR>
@@ -58,25 +58,25 @@ Global Symbols
 </UL>
 <P><STRONG><a name="[9]"></a>__main</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry.o(.ARM.Collect$$$$00000000))
 
-<P><STRONG><a name="[1e]"></a>_main_stk</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
+<P><STRONG><a name="[1f]"></a>_main_stk</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
 
 <P><STRONG><a name="[a]"></a>_main_scatterload</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
-<P><STRONG><a name="[1d]"></a>__main_after_scatterload</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
+<P><STRONG><a name="[1e]"></a>__main_after_scatterload</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
 <BR><BR>[Called By]<UL><LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
-<P><STRONG><a name="[1f]"></a>_main_clock</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
+<P><STRONG><a name="[20]"></a>_main_clock</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
 
-<P><STRONG><a name="[20]"></a>_main_cpp_init</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
+<P><STRONG><a name="[21]"></a>_main_cpp_init</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
 
-<P><STRONG><a name="[21]"></a>_main_init</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
+<P><STRONG><a name="[22]"></a>_main_init</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
 
-<P><STRONG><a name="[22]"></a>__rt_final_cpp</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
+<P><STRONG><a name="[23]"></a>__rt_final_cpp</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
 
-<P><STRONG><a name="[23]"></a>__rt_final_exit</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
+<P><STRONG><a name="[24]"></a>__rt_final_exit</STRONG> (ARM, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
 
 <P><STRONG><a name="[d]"></a>delay_us</STRONG> (ARM, 40 bytes, Stack size 0 bytes, delay.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
@@ -91,7 +91,7 @@ Global Symbols
 <LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitLcd
 </UL>
 
-<P><STRONG><a name="[1c]"></a>InitSpi</STRONG> (ARM, 160 bytes, Stack size 0 bytes, lcd.o(.text))
+<P><STRONG><a name="[1d]"></a>InitSpi</STRONG> (ARM, 160 bytes, Stack size 0 bytes, lcd.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -130,9 +130,9 @@ Global Symbols
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteSpiCommand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
 <LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
-<LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
+<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;highScoreScreen
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;optionScreen
 </UL>
@@ -152,7 +152,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDSetPixel
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
+<BR>[Called By]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drawGameNet
 </UL>
 
 <P><STRONG><a name="[14]"></a>LCDSetCircle</STRONG> (ARM, 312 bytes, Stack size 60 bytes, lcd.o(.text))
@@ -161,7 +161,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[12]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDSetPixel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
-<LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
+<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
 </UL>
 
 <P><STRONG><a name="[15]"></a>LCDPutChar</STRONG> (ARM, 256 bytes, Stack size 48 bytes, lcd.o(.text))
@@ -170,7 +170,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteSpiData
 <LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteSpiCommand
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
+<BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutStr
 </UL>
 
@@ -179,9 +179,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<BR>[Called By]<UL><LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
 <LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
-<LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
+<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;highScoreScreen
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;optionScreen
 </UL>
@@ -208,15 +208,23 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
 </UL>
 
-<P><STRONG><a name="[1a]"></a>gameScreen</STRONG> (ARM, 788 bytes, Stack size 16 bytes, main.o(.text))
+<P><STRONG><a name="[1a]"></a>drawGameNet</STRONG> (ARM, 132 bytes, Stack size 16 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = drawGameNet &rArr; LCDSetLine &rArr; LCDSetPixel &rArr; WriteSpiData
+</UL>
+<BR>[Calls]<UL><LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDSetLine
+</UL>
+<BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
+</UL>
+
+<P><STRONG><a name="[1b]"></a>gameScreen</STRONG> (ARM, 668 bytes, Stack size 16 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 108 + In Cycle
 <LI>Call Chain = gameScreen &rArr;  helloScreen (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<BR>[Calls]<UL><LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;drawGameNet
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutStr
 <LI><a href="#[15]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutChar
 <LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDSetCircle
-<LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDSetLine
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClearScreen
 </UL>
 <BR>[Called By]<UL><LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
@@ -226,8 +234,8 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 132 + In Cycle
 <LI>Call Chain = menuScreen &rArr;  helloScreen (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
-<LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
+<BR>[Calls]<UL><LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;highScoreScreen
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;optionScreen
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDPutStr
@@ -235,12 +243,12 @@ Global Symbols
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClearScreen
 <LI><a href="#[c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<BR>[Called By]<UL><LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
 <LI><a href="#[19]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;highScoreScreen
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;optionScreen
 </UL>
 
-<P><STRONG><a name="[1b]"></a>helloScreen</STRONG> (ARM, 68 bytes, Stack size 16 bytes, main.o(.text))
+<P><STRONG><a name="[1c]"></a>helloScreen</STRONG> (ARM, 68 bytes, Stack size 16 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 148<LI>Call Chain = helloScreen &rArr; menuScreen &rArr;  helloScreen (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
@@ -249,32 +257,32 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;menuScreen
-<LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
+<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gameScreen
 </UL>
 
 <P><STRONG><a name="[8]"></a>main</STRONG> (ARM, 104 bytes, Stack size 0 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 148<LI>Call Chain = main &rArr; helloScreen &rArr; menuScreen &rArr;  helloScreen (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
+<BR>[Calls]<UL><LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;helloScreen
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCDClearScreen
 <LI><a href="#[e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitLcd
-<LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitSpi
+<LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitSpi
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
 <P><STRONG><a name="[b]"></a>__scatterload</STRONG> (ARM, 40 bytes, Stack size 0 bytes, init.o(.text))
-<BR><BR>[Calls]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main_after_scatterload
+<BR><BR>[Calls]<UL><LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main_after_scatterload
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_main_scatterload
 </UL>
 
-<P><STRONG><a name="[24]"></a>__scatterload_rt2</STRONG> (ARM, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+<P><STRONG><a name="[25]"></a>__scatterload_rt2</STRONG> (ARM, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
 
-<P><STRONG><a name="[25]"></a>__scatterload_copy</STRONG> (ARM, 28 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+<P><STRONG><a name="[26]"></a>__scatterload_copy</STRONG> (ARM, 28 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
 
-<P><STRONG><a name="[26]"></a>__scatterload_null</STRONG> (ARM, 4 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+<P><STRONG><a name="[27]"></a>__scatterload_null</STRONG> (ARM, 4 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
 
-<P><STRONG><a name="[27]"></a>__scatterload_zeroinit</STRONG> (ARM, 24 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+<P><STRONG><a name="[28]"></a>__scatterload_zeroinit</STRONG> (ARM, 24 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 <P>
 <H3>
 Local Symbols
