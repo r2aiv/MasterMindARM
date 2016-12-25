@@ -1,0 +1,16 @@
+;#<FEEDBACK># ARM Linker, 5060300: Last Updated: Sun Dec 25 15:04:51 2016
+;VERSION 0.2
+;FILE delay.o
+delay_s <= USED 0
+;FILE lcd.o
+Backlight <= USED 0
+LCDSetRect <= USED 0
+;FILE main.o
+authorScreen <= USED 0
+checkValues <= USED 0
+clearCurentTab <= USED 0
+drawColouredDot <= USED 0
+generateNumbers <= USED 0
+winScreen <= USED 0
+;FILE retarget.o
+_sys_exit <= USED 0

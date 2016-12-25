@@ -1,8 +1,0 @@
---cpu ARM7TDMI
-".\objects\sam7.o"
-".\objects\main.o"
-".\objects\delay.o"
-".\objects\lcd.o"
---ro-base 0x00100000 --entry 0x00100000 --rw-base 0x00200000 --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols
---info sizes --info totals --info unused --info veneers
---list ".\Listings\MasterMind.map" -o .\Objects\MasterMind.axf
