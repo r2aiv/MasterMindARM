@@ -41,11 +41,11 @@ lcd.c(165): warning:  #61-D: integer operation result is out of range
 T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
 lcd.c: 2 warnings, 0 errors
 compiling Main.c...
-Main.c(199): warning:  #177-D: variable "currentOption" was declared but never referenced
-        int currentOption = 0;
+Main.c(401): warning:  #177-D: variable "i" was declared but never referenced
+        int deltaLine, i;
 Main.c: 1 warning, 0 errors
 linking...
-Program Size: Code=4408 RO-data=3148 RW-data=16 ZI-data=1256  
+Program Size: Code=4912 RO-data=3148 RW-data=36 ZI-data=1236  
 ".\Flash\Blinky.axf" - 0 Error(s), 3 Warning(s).
 
 *** Performing Cross-Module-Optimization:
@@ -60,11 +60,11 @@ lcd.c(165): warning:  #61-D: integer operation result is out of range
 T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
 lcd.c: 2 warnings, 0 errors
 compiling Main.c...
-Main.c(199): warning:  #177-D: variable "currentOption" was declared but never referenced
-        int currentOption = 0;
+Main.c(401): warning:  #177-D: variable "i" was declared but never referenced
+        int deltaLine, i;
 Main.c: 1 warning, 0 errors
 linking...
-Program Size: Code=3612 RO-data=3148 RW-data=16 ZI-data=1160  
+Program Size: Code=4120 RO-data=3148 RW-data=36 ZI-data=1164  
 compiling Retarget.c...
 compiling delay.c...
 compiling lcd.c...
@@ -76,15 +76,15 @@ lcd.c(165): warning:  #61-D: integer operation result is out of range
 T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
 lcd.c: 2 warnings, 0 errors
 compiling Main.c...
-Main.c(199): warning:  #177-D: variable "currentOption" was declared but never referenced
-        int currentOption = 0;
+Main.c(401): warning:  #177-D: variable "i" was declared but never referenced
+        int deltaLine, i;
 Main.c: 1 warning, 0 errors
 linking...
-Program Size: Code=3612 RO-data=3148 RW-data=16 ZI-data=1160  
+Program Size: Code=4120 RO-data=3148 RW-data=36 ZI-data=1164  
 FromELF: creating hex file...
 ".\Flash\Blinky.axf" - 0 Error(s), 3 Warning(s).
 *** Completed Cross-Module-Optimization after 3 iteration(s).
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:11
 </pre>
 </body>
 </html>

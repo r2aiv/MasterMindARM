@@ -50,6 +50,10 @@ void authorScreen(void);
 //DRAWING FUNCTIONS
 void drawColouredDot(int color, int x, int y); //TODO: correct
 void drawGameNet(void);
+void drawCircleLine(int line);
+void drawCircleCursor(int currentPosition, int newPosition);
+void drawNumber(int oldNumber, int newNumber, int position);
+void drawResultDots(int line);
 
 //GAME LOGIC
 void generateNumbers(void);
@@ -60,7 +64,7 @@ bool checkValues(void);
 /**** GLOBAL VARIABLE DECLARATION ****/
 bool flagArray[9];
 int targetArray[5];
-int currentArray[5];
+int currentArray[5] = {1, 2, 3, 4, 5};
 guess ifWinArray[5];
 
 /**** LED DEFINE INIT ****/
@@ -200,63 +204,32 @@ void gameScreen (void){
 	
 	LCDClearScreen();
 	
-	drawGameNet();
-	
 	//INITIALIZATION
 	//generateNumbers();
-	//drawColouredDot(RED, 10, 5);
-	LCDSetCircle(117, 13, 10, RED);	
-	//drawColouredDot(RED, 10, 25);
-	LCDSetCircle(117, 33, 10, RED);	
-	//drawColouredDot(RED, 10, 45);
-	LCDSetCircle(117, 53, 10, RED);	
-	//drawColouredDot(RED, 10, 65);
-	LCDSetCircle(117, 73, 10, RED);	
-	//drawColouredDot(RED, 10, 85);
-	LCDSetCircle(117, 93, 10, RED);	
 	
-	LCDPutChar('1', 110, 9, LARGE, RED, BLACK); //znak w kole
+	//prototyp interfejsu
+	drawGameNet();
+	drawCircleLine(0);
+	drawCircleLine(1);
+	drawCircleLine(2);
+	drawCircleLine(3);
+		
+	LCDPutChar(currentArray[0] + '0', 110, 9, LARGE, RED, BLACK); //znak w kole
+	LCDPutChar(currentArray[1] + '0', 110, 29, LARGE, RED, BLACK); //znak w kole
+	LCDPutChar(currentArray[2] + '0', 110, 49, LARGE, RED, BLACK); //znak w kole
+	LCDPutChar(currentArray[3] + '0', 110, 69, LARGE, RED, BLACK); //znak w kole
+	LCDPutChar(currentArray[4] + '0', 110, 89, LARGE, RED, BLACK); //znak w kole
 
 	LCDPutStr("CZAS: xxxx", 6, 5, SMALL, BLACK, RED);
 	LCDPutStr("ILOSC PROB: x", 16, 5, SMALL, BLACK, RED);
 	
-	//prototyp interfejsu
+	drawResultDots(1);
+	drawResultDots(2);
+	drawResultDots(3);
 	
-	//2 linia
-	LCDSetCircle(91, 13, 10, RED);	
-	//drawColouredDot(RED, 10, 25);
-	LCDSetCircle(91, 33, 10, RED);	
-	//drawColouredDot(RED, 10, 45);
-	LCDSetCircle(91, 53, 10, RED);	
-	//drawColouredDot(RED, 10, 65);
-	LCDSetCircle(91, 73, 10, RED);	
-	//drawColouredDot(RED, 10, 85);
-	LCDSetCircle(91, 93, 10, RED);
-	
-	//3 linia
-	LCDSetCircle(65, 13, 10, RED);	
-	//drawColouredDot(RED, 10, 25);
-	LCDSetCircle(65, 33, 10, RED);	
-	//drawColouredDot(RED, 10, 45);
-	LCDSetCircle(65, 53, 10, RED);	
-	//drawColouredDot(RED, 10, 65);
-	LCDSetCircle(65, 73, 10, RED);	
-	//drawColouredDot(RED, 10, 85);
-	LCDSetCircle(65, 93, 10, RED);
-	
-	//4linia
-	LCDSetCircle(39, 13, 10, RED);	
-	//drawColouredDot(RED, 10, 25);
-	LCDSetCircle(39, 33, 10, RED);	
-	//drawColouredDot(RED, 10, 45);
-	LCDSetCircle(39, 53, 10, RED);	
-	//drawColouredDot(RED, 10, 65);
-	LCDSetCircle(39, 73, 10, RED);	
-	//drawColouredDot(RED, 10, 85);
-	LCDSetCircle(39, 93, 10, RED);
-	
-	//wyniki
 	LCDSetCircle(124, 112, 3, RED);
+	LCDSetCircle(124, 112, 2, BLUE);
+	LCDSetCircle(124, 112, 1, BLUE);
 	LCDSetCircle(124, 124, 3, RED);
 	LCDSetCircle(118, 118, 3, RED);
 	LCDSetCircle(112, 112, 3, RED);
@@ -264,31 +237,45 @@ void gameScreen (void){
 	
 	/////////////////	
 	
+	drawCircleCursor(1, currentOption);
+	
 	while(1){
-		//LCDPutStr("GRA", 120, 70, SMALL, BLACK, RED);
-		/*
-		drawColouredDot(currentArray[0], 10, 5);
+		
+		/*drawColouredDot(currentArray[0], 10, 5);
 		drawColouredDot(currentArray[1], 10, 25);
 		drawColouredDot(currentArray[2], 10, 45);
 		drawColouredDot(currentArray[3], 10, 65);
 		drawColouredDot(currentArray[4], 10, 85);
 		*/
-		/*if(JOY_PUSH_UP)
-			if((currentArray[currentOption] < 5) && (currentArray[currentOption] > 0))
-				currentArray[currentOption]++;
+		if(JOY_PUSH_UP)
+			if((currentArray[currentOption] < 8) && (currentArray[currentOption] >= 0)){
+				drawNumber(currentArray[currentOption], currentArray[currentOption] + 1, currentOption);
+				currentArray[currentOption]++;		
+				delay_ms(100);
+			}
 		
 		if(JOY_PUSH_DOWN)
-			if((currentArray[currentOption] < 5) && (currentArray[currentOption] > 0))
+			if((currentArray[currentOption] <= 8) && (currentArray[currentOption] > 0)){
+				drawNumber(currentArray[currentOption], currentArray[currentOption] - 1, currentOption);
 				currentArray[currentOption]--;
+				delay_ms(100);
+			}
 			
 		if(JOY_PUSH_LEFT)
-			if((currentOption < 5) && (currentOption > 0))
+			if((currentOption <= 4) && (currentOption > 0)){
+				drawCircleCursor(currentOption, (currentOption - 1));
 				currentOption--;
+				delay_ms(100);
+			}
+		
 		
 		if(JOY_PUSH_RIGHT)
-			if((currentOption < 5) && (currentOption > 0))
+			if((currentOption < 4) && (currentOption >= 0)){
+				drawCircleCursor(currentOption, (currentOption + 1));
 				currentOption++;
-				
+				delay_ms(100);
+			}
+		/*		
 		if(LEFT_KEY_DOWN){
 			if(checkValues()){
 				winScreen();
@@ -298,8 +285,8 @@ void gameScreen (void){
 				//drawing result array
 				//drawing last choice
 			}
-		}*/
-		
+		}
+		*/
 		if(RIGHT_KEY_DOWN)
 			//return;
 		helloScreen();
@@ -408,4 +395,64 @@ void drawGameNet(void){
 	LCDSetLine(26, 0, 26, 130, YELLOW);
 	LCDSetLine(78, 0, 78, 130, YELLOW);
 	LCDSetLine(52, 0, 52, 130, YELLOW);
+}
+
+void drawCircleLine(int line){
+	int deltaLine, i;
+	
+	if((line >= 0) && (line < 4))
+		deltaLine = 26 * line;
+	else
+		return;
+	
+	LCDSetCircle(117 - deltaLine, 13, 10, RED);	
+	LCDSetCircle(117 - deltaLine, 33, 10, RED);	
+	LCDSetCircle(117 - deltaLine, 53, 10, RED);	
+	LCDSetCircle(117 - deltaLine, 73, 10, RED);	
+	LCDSetCircle(117 - deltaLine, 93, 10, RED);	
+	//eksperyment z wypelnieniem
+	//for (i = 10; i > 0 ; i--)
+	//	LCDSetCircle(117 - deltaLine, 93, i, RED);	
+}
+
+void drawCircleCursor(int currentPosition, int newPosition){
+	int deltaYcurrent, deltaYnew;
+	
+	if((currentPosition >= 0) && (currentPosition <= 4) && (newPosition >= 0) && (newPosition <= 4)){
+		deltaYcurrent = 20 * currentPosition;
+		deltaYnew = 20 * newPosition;
+	}	
+	else
+		return;
+	
+	LCDSetCircle(117, 13 + deltaYcurrent, 10, RED);
+	LCDSetCircle(117, 13 + deltaYnew, 10, YELLOW);
+}
+
+void drawNumber(int oldNumber, int newNumber, int position){
+	int deltaY;
+	if((position >= 0) && (position <= 4)){
+		deltaY = 20 * position;
+
+	}	
+	else
+		return;
+	
+	LCDPutChar(oldNumber + '0', 110, 9 + deltaY, LARGE, BLACK, BLACK);
+	LCDPutChar(newNumber + '0', 110, 9 + deltaY, LARGE, RED, BLACK);
+}
+
+void drawResultDots(int line){
+	int deltaLine;
+	
+	if((line >= 0) && (line < 4))
+		deltaLine = 26 * line;
+	else
+		return;
+	
+	LCDSetCircle(124 - deltaLine, 112, 3, RED);
+	LCDSetCircle(124 - deltaLine, 124, 3, RED);
+	LCDSetCircle(118 - deltaLine, 118, 3, RED);
+	LCDSetCircle(112 - deltaLine, 112, 3, RED);
+	LCDSetCircle(112 - deltaLine, 124, 3, RED);
 }
