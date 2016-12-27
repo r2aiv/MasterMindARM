@@ -1,5 +1,6 @@
 -c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2
--I C:\Keil_v5\ARM\RV31\INC
--I C:\Keil_v5\ARM\CMSIS\Include
--I C:\Keil_v5\ARM\Inc\Atmel\SAM7X
+-IF:\Keil_v5\ARM\RV31\INC
+-IF:\Keil_v5\ARM\CMSIS\Include
+-IF:\Keil_v5\ARM\Inc\Atmel\SAM7X
+-D__UVISION_VERSION="521"
 -o .\flash\delay.o --depend .\flash\delay.d --feedback ".\Flash\PROJECT_ARM.fed" "delay.c"

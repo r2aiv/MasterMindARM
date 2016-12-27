@@ -1,6 +1,7 @@
 #include <AT91SAM7X256.H>
+#include "include/lib_AT91SAM7X256.h"//for timer
 #include <stdlib.h>
-#include <time.h>
+#include <ctime>
 #include "lcd.h"
 
 /**** DEFINITION OF BOLEAN TYPE ****/
@@ -55,8 +56,12 @@ void drawCircleCursor(int currentPosition, int newPosition);
 void drawNumber(int oldNumber, int newNumber, int position);
 void drawResultDots(int line);
 
+void changeAnimation(void);
+void changeAnimation2(void);
+
 //GAME LOGIC
 void generateNumbers(void);
+void resetFlagArray(void);
 void clearCurentTab(void);
 bool checkValues(void);
 /**** END OF FUNCTIONS DECLARATION ****/
@@ -101,18 +106,104 @@ guess ifWinArray[5];
 #define JOY_PUSH_DOWN (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA8) == 0)
 #define JOY_PUSHED (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA15) == 0)
 
+
+#define LEFT_STICK (!((AT91C_BASE_PIOA->PIO_PDSR) & AT91C_PIO_PA7))
+#define RIGHT_STICK (!((AT91C_BASE_PIOA->PIO_PDSR) & AT91C_PIO_PA14))
+char ciag[100];
+int zmienna_1;
+volatile int zmienna_2;
+static volatile unsigned int status_IRQ;
+
+
+// Timer0 ISR
+__irq void tim0_isr (void)  {
+
+  volatile int dummy = AT91C_BASE_TC0->TC_SR;      //  Interrupt Ack - odczytanie rejestru statusu kasuje flage zgloszenia komparacji timera
+  AT91C_BASE_AIC->AIC_ICCR  = (1 << AT91C_ID_TC0);        //  Interrupt Clear Command Register - skasowanie flagi zgloszenia przerwania w AIC
+	
+//..................................
+//tu mozemy wstawic swoje instrukcje	
+	zmienna_2++;
+			if(zmienna_2 % 100 == 0){
+			zmienna_1 = zmienna_1 + 1;
+
+		}
+//..................................
+
+//tak zakonczamy przerwanie
+  *AT91C_AIC_EOICR = 0;                                   // End of Interrupt
+}
+
+__irq void pioIsr(void) 
+{
+		//kopiujemy zawartosc rejestru PIO_ISR do zmiennej status
+		status_IRQ = AT91C_BASE_PIOA->PIO_ISR;
+		//teraz flagi w PIO_ISR sa juz skasowane
+		
+	//..................................
+	//kod uzytkownika
+
+		
+		//przechodzimy do analizy zawartosci zmiennej status
+		//przykladowo:
+
+	if (status_IRQ & (1<<7)) //jesli PA7 wywolalo przerwanie... (dowolna zmiana stanu na linii PA7 = wcisniecie lub puszczenie klawisza)
+		{
+			//kod dla zmiany PA7
+			if (LEFT_STICK) //dodatkowo sprawdzamy, czy aktualny stan to wcisniety klawisz? (czyli zdarzenie, które wystapilo to wcisniecie)
+			{
+				zmienna_1--;
+
+			}
+		}
+		if (status_IRQ & (1<<14)) //jesli PA14 wywolalo przerwanie... (dowolna zmiana stanu na linii PA8 = wcisniecie lub puszczenie klawisza)
+		{
+			//kod dla PA8...
+			zmienna_1++;
+		}
+	//..................................
+
+
+ //tak zakonczamy przerwanie
+	AT91F_AIC_AcknowledgeIt(AT91C_BASE_AIC);
+}
+
+
 int main(void){
+	
+	//Tu sie zaczyna dziadostwo do obslugi przerwan dla zegara
+	const unsigned char PIO_IRQ_PRIORITY = 5;
+
+	AT91C_BASE_AIC->AIC_IDCR = 0xffffffff;
+
+  AT91F_PMC_EnablePeriphClock(AT91C_BASE_PMC, 1 << AT91C_ID_TC0);
+  AT91C_BASE_TC0->TC_CCR    = AT91C_TC_CLKEN | AT91C_TC_SWTRG;
+  AT91C_BASE_TC0->TC_CMR    = 2 | AT91C_TC_CPCTRG;
+
+  AT91C_BASE_TC0->TC_RC     = 14975;   // period is 10ms - 14975 cykli po 0.6677 us kazdy = 10000us
+	
+	AT91C_BASE_TC0->TC_IER    = AT91C_TC_CPCS;
+
+	AT91C_BASE_AIC->AIC_SMR[AT91C_ID_TC0] = AT91C_AIC_SRCTYPE_INT_POSITIVE_EDGE | AT91C_AIC_PRIOR_HIGHEST;
+
+	AT91C_BASE_AIC->AIC_SVR[AT91C_ID_TC0] = (unsigned long) tim0_isr; 
+  
+	AT91C_BASE_AIC->AIC_IECR = (1 << AT91C_ID_TC0); 
+	//A tu sie konczy
+	
+	srand(2);
+	
+	zmienna_1=0;
+	zmienna_2=0;
+
+	
 	//Enable clock of the PIO
 	AT91C_BASE_PMC -> PMC_PCER = (1 << AT91C_ID_PIOA);
 	AT91C_BASE_PMC -> PMC_PCER = (1 << AT91C_ID_PIOB);
+	
 	InitSpi();
-
-	// Init LCD
 	InitLcd();
-
 	LCDClearScreen();
-
-	//srand(time(0));
 
 	helloScreen();
 }
@@ -128,6 +219,7 @@ void helloScreen(void){
 	//TODO dodac jakie wizualne efekty
 	while(1)
 	if(LEFT_KEY_DOWN){
+		//changeAnimation2();
 		menuScreen();
 	}
 }
@@ -136,6 +228,8 @@ void helloScreen(void){
 void menuScreen(void){
 	volatile int currentOption = 0;
 	volatile int runOption = 0;
+	zmienna_2 = 0;
+	
 	LCDClearScreen();
 	while(1){
 		
@@ -149,8 +243,10 @@ void menuScreen(void){
 		switch(currentOption){
 			case 0:
 				//TODO: starting new game
-				if(runOption)
+				if(runOption){
+					//changeAnimation();
 					gameScreen();
+				}
 				LCDSetCircle(53, 5,3, YELLOW);
 				break;
 			case 1:
@@ -205,9 +301,10 @@ void gameScreen (void){
 	LCDClearScreen();
 	
 	//INITIALIZATION
-	//generateNumbers();
+	generateNumbers();
 	
-	//prototyp interfejsu
+	
+	
 	drawGameNet();
 	drawCircleLine(0);
 	drawCircleLine(1);
@@ -220,7 +317,7 @@ void gameScreen (void){
 	LCDPutChar(currentArray[3] + '0', 110, 69, LARGE, RED, BLACK); //znak w kole
 	LCDPutChar(currentArray[4] + '0', 110, 89, LARGE, RED, BLACK); //znak w kole
 
-	LCDPutStr("CZAS: xxxx", 6, 5, SMALL, BLACK, RED);
+	//LCDPutStr("CZAS: xxxx", 6, 5, SMALL, BLACK, RED);
 	LCDPutStr("ILOSC PROB: x", 16, 5, SMALL, BLACK, RED);
 	
 	drawResultDots(1);
@@ -235,29 +332,35 @@ void gameScreen (void){
 	LCDSetCircle(112, 112, 3, RED);
 	LCDSetCircle(112, 124, 3, RED);
 	
+	LCDPutChar(targetArray[0] + '0', 84, 9, LARGE, RED, BLACK);
+	LCDPutChar(targetArray[1] + '0', 84, 29, LARGE, RED, BLACK);
+	LCDPutChar(targetArray[2] + '0', 84, 49, LARGE, RED, BLACK);
+	LCDPutChar(targetArray[3] + '0', 84, 69, LARGE, RED, BLACK);
+	LCDPutChar(targetArray[4] + '0', 84, 89, LARGE, RED, BLACK);
+	
 	/////////////////	
+	zmienna_2 = 0;
 	
 	drawCircleCursor(1, currentOption);
 	
 	while(1){
+
+		sprintf(ciag, "CZAS:%d  ", zmienna_1);
+		LCDPutStr(ciag, 6, 5, SMALL, BLACK, RED);
 		
-		/*drawColouredDot(currentArray[0], 10, 5);
-		drawColouredDot(currentArray[1], 10, 25);
-		drawColouredDot(currentArray[2], 10, 45);
-		drawColouredDot(currentArray[3], 10, 65);
-		drawColouredDot(currentArray[4], 10, 85);
-		*/
 		if(JOY_PUSH_UP)
-			if((currentArray[currentOption] < 8) && (currentArray[currentOption] >= 0)){
+			if((currentArray[currentOption] < 9) && (currentArray[currentOption] >= 1)){
 				drawNumber(currentArray[currentOption], currentArray[currentOption] + 1, currentOption);
-				currentArray[currentOption]++;		
+				currentArray[currentOption]++;	
+				//LCDPutChar(currentArray[currentOption] + '0', 84, 89, LARGE, RED, BLACK);
 				delay_ms(100);
 			}
 		
 		if(JOY_PUSH_DOWN)
-			if((currentArray[currentOption] <= 8) && (currentArray[currentOption] > 0)){
+			if((currentArray[currentOption] <= 9) && (currentArray[currentOption] > 1)){
 				drawNumber(currentArray[currentOption], currentArray[currentOption] - 1, currentOption);
 				currentArray[currentOption]--;
+				//LCDPutChar(currentArray[currentOption] + '0', 84, 89, LARGE, RED, BLACK);
 				delay_ms(100);
 			}
 			
@@ -275,26 +378,30 @@ void gameScreen (void){
 				currentOption++;
 				delay_ms(100);
 			}
-		/*		
+			
 		if(LEFT_KEY_DOWN){
-			if(checkValues()){
+			LCDPutStr("MENU", 20, 50, SMALL, BLACK, RED);
+			if(checkValues() == true){
+				delay_ms(100);
 				winScreen();
-				return;
 			}
 			else{
 				//drawing result array
 				//drawing last choice
 			}
 		}
-		*/
-		if(RIGHT_KEY_DOWN)
+		
+		if(RIGHT_KEY_DOWN){
 			//return;
-		helloScreen();
+			helloScreen();
+			zmienna_2 = 0;
+		}
 	}
 	
 }
 
 void winScreen(void){
+	LCDClearScreen();
 	while(1){
 		LCDPutStr("WYGRALES", 120, 70, SMALL, BLACK, RED);
 		if(RIGHT_KEY_DOWN)
@@ -303,16 +410,25 @@ void winScreen(void){
 	}
 }
 
-void generateNumbers(void){
+void generateNumbers(void){	
 	int i;
 	
+	resetFlagArray();
+
 	for(i = 0; i < 5; i++){
 		do{
-			targetArray[i] = 1;//(rand() % 9) + 1;
+			targetArray[i] = (rand() % 9) + 1;
 		}
 		while(flagArray[targetArray[i]] == true);
 		flagArray[targetArray[i]] = true;
 	}
+}
+
+void resetFlagArray(void){
+	int i;
+	
+	for(i = 0; i < 9; i++)
+		flagArray[i] = false;
 }
 
 //TODO - implement
@@ -324,13 +440,15 @@ void drawColouredDot(int color, int x, int y){
 bool checkValues(void){
 	int i, j;
 	int ifWinArrayIndex = 0;
+	LCDPutStr("COS", 20, 50, SMALL, BLACK, RED);
 	//checking color and place of dots
 	for(i = 0; i < 5; i++){
 		//checking good position
 		if(currentArray[i] == targetArray[i]){
-			ifWinArray[ifWinArrayIndex] = GOOD;
+			LCDPutStr("FOR", 20, 60, SMALL, BLACK, RED);
+			ifWinArray[ifWinArrayIndex] = 1;
 			ifWinArrayIndex++;
-		}
+		}/*
 		else{
 			for(j = 0; j < 5; j++){
 				//checking good color
@@ -339,14 +457,17 @@ bool checkValues(void){
 					ifWinArrayIndex++;
 				}
 			}
-		}
+		}*/
 	}
 	
 	//checking targetArray
 	for(i = 0; i < 5; i++){
-		if(ifWinArray[i] != GOOD)
+		if(ifWinArray[i] != 1){
+			LCDPutStr("ZLE", 20, 50, SMALL, BLACK, RED);
 			return false;
+		}
 	}
+	LCDPutStr("DOBRZE", 20, 50, SMALL, BLACK, RED);
 	return true;
 }
 
@@ -455,4 +576,30 @@ void drawResultDots(int line){
 	LCDSetCircle(118 - deltaLine, 118, 3, RED);
 	LCDSetCircle(112 - deltaLine, 112, 3, RED);
 	LCDSetCircle(112 - deltaLine, 124, 3, RED);
+}
+
+void changeAnimation(void){
+	int i;
+	for(i = 0; i < 132; i++){
+		LCDSetRect(0, 0, i, i, FILL, WHITE);
+		delay_ms(5);
+	}
+	for(i = 132; i >= 0; i--){
+		LCDSetRect(132, 132, i, i, FILL, BLACK);
+		delay_ms(5);
+	}
+	
+}
+
+void changeAnimation2(void){
+	int i;
+	for(i = 0; i < 66; i++){
+		LCDSetRect(66 - i, 66 - i, 66 + i, 66 + i, FILL, WHITE);
+		delay_ms(5);
+	}
+	for(i = 66; i >= 0; i--){
+		LCDSetRect(132 - i, 132 - i, 0 + i, 0 + i, FILL, BLACK);
+		delay_ms(5);
+	}
+	
 }
