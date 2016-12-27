@@ -4,6 +4,8 @@
 ".\flash\delay.o"
 ".\flash\lcd.o"
 ".\flash\main.o"
+".\flash\animation.o"
+".\flash\draw.o"
 --library_type=microlib
 --feedback ".\Flash\Blinky.fed" --feedback_image=none
 --strict --scatter ".\Flash\Blinky.sct"

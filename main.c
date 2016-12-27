@@ -1,8 +1,11 @@
 #include <AT91SAM7X256.H>
 #include "include/lib_AT91SAM7X256.h"//for timer
 #include <stdlib.h>
+#include <stdio.h>
 #include <ctime>
 #include "lcd.h"
+#include "animation.h"
+#include "draw.h"
 
 /**** DEFINITION OF BOLEAN TYPE ****/
 typedef int bool;
@@ -19,25 +22,7 @@ typedef int guess;
 #define GOOD 2
 
 /**** FUNCTIONS DECLARATIONS ****/
-extern void InitSpi(void);
-extern void InitLcd(void);
-extern void LCDClearScreen(void);
 
-extern void WriteSpiCommand(unsigned int data);
-extern void WriteSpiData(unsigned int data);
-
-extern void LCDClearScreen(void);
-extern void LCDSetXY(int x, int y);
-extern void LCDSetPixel(int  x, int  y, int  color);
-extern void LCDSetLine(int x1, int y1, int x2, int y2, int color);
-extern void LCDSetRect(int x0, int y0, int x1, int y1, unsigned char fill, int color);
-extern void LCDSetCircle(int x0, int y0, int radius, int color);
-extern void LCDPutChar(char c, int  x, int  y, int size, int fcolor, int bcolor);
-extern void LCDPutString (char *lcd_string, const char *font_style, unsigned char x, unsigned char y,
-                   unsigned char fcolor, unsigned char bcolor);
-extern void LCDPutStr(char *pString, int  x, int  y, int Size, int fColor, int bColor);
-extern void delay_ms(unsigned int ms);
-//extern void LCDWrite130x130bmp(void);
 
 //STATES OF PROGRAM
 void helloScreen(void);
@@ -47,17 +32,6 @@ void optionScreen(void);
 void highScoreScreen(void);
 void winScreen(void);
 void authorScreen(void);
-
-//DRAWING FUNCTIONS
-void drawColouredDot(int color, int x, int y); //TODO: correct
-void drawGameNet(void);
-void drawCircleLine(int line);
-void drawCircleCursor(int currentPosition, int newPosition);
-void drawNumber(int oldNumber, int newNumber, int position);
-void drawResultDots(int line);
-
-void changeAnimation(void);
-void changeAnimation2(void);
 
 //GAME LOGIC
 void generateNumbers(void);
@@ -71,6 +45,7 @@ bool flagArray[9];
 int targetArray[5];
 int currentArray[5] = {1, 2, 3, 4, 5};
 guess ifWinArray[5];
+bool randomSeedGenerated = false;
 
 /**** LED DEFINE INIT ****/
 //TODO lines 67-81 -> dead code
@@ -172,7 +147,7 @@ __irq void pioIsr(void)
 int main(void){
 	
 	//Tu sie zaczyna dziadostwo do obslugi przerwan dla zegara
-	const unsigned char PIO_IRQ_PRIORITY = 5;
+	//const unsigned char PIO_IRQ_PRIORITY = 5;
 
 	AT91C_BASE_AIC->AIC_IDCR = 0xffffffff;
 
@@ -191,7 +166,7 @@ int main(void){
 	AT91C_BASE_AIC->AIC_IECR = (1 << AT91C_ID_TC0); 
 	//A tu sie konczy
 	
-	srand(2);
+	
 	
 	zmienna_1=0;
 	zmienna_2=0;
@@ -219,6 +194,7 @@ void helloScreen(void){
 	//TODO dodac jakie wizualne efekty
 	while(1)
 	if(LEFT_KEY_DOWN){
+		delay_ms(50);
 		//changeAnimation2();
 		menuScreen();
 	}
@@ -245,6 +221,10 @@ void menuScreen(void){
 				//TODO: starting new game
 				if(runOption){
 					//changeAnimation();
+					if(randomSeedGenerated == false){
+						randomSeedGenerated = true;
+						srand(zmienna_2);
+					}
 					gameScreen();
 				}
 				LCDSetCircle(53, 5,3, YELLOW);
@@ -295,15 +275,12 @@ void menuScreen(void){
 }
 
 void gameScreen (void){
-	//TODO: handling of win
 	int currentOption = 0;
 	
 	LCDClearScreen();
 	
 	//INITIALIZATION
 	generateNumbers();
-	
-	
 	
 	drawGameNet();
 	drawCircleLine(0);
@@ -340,6 +317,7 @@ void gameScreen (void){
 	
 	/////////////////	
 	zmienna_2 = 0;
+	zmienna_1 = 0;
 	
 	drawCircleCursor(1, currentOption);
 	
@@ -438,7 +416,7 @@ void drawColouredDot(int color, int x, int y){
 
 //TODO - implement
 bool checkValues(void){
-	int i, j;
+	int i;//, j;
 	int ifWinArrayIndex = 0;
 	LCDPutStr("COS", 20, 50, SMALL, BLACK, RED);
 	//checking color and place of dots
@@ -510,96 +488,3 @@ void authorScreen(void){
 	}
 }
 
-void drawGameNet(void){
-	LCDSetLine(104, 0, 104, 130, YELLOW);
-	LCDSetLine(26, 105, 130, 105, YELLOW);
-	LCDSetLine(26, 0, 26, 130, YELLOW);
-	LCDSetLine(78, 0, 78, 130, YELLOW);
-	LCDSetLine(52, 0, 52, 130, YELLOW);
-}
-
-void drawCircleLine(int line){
-	int deltaLine, i;
-	
-	if((line >= 0) && (line < 4))
-		deltaLine = 26 * line;
-	else
-		return;
-	
-	LCDSetCircle(117 - deltaLine, 13, 10, RED);	
-	LCDSetCircle(117 - deltaLine, 33, 10, RED);	
-	LCDSetCircle(117 - deltaLine, 53, 10, RED);	
-	LCDSetCircle(117 - deltaLine, 73, 10, RED);	
-	LCDSetCircle(117 - deltaLine, 93, 10, RED);	
-	//eksperyment z wypelnieniem
-	//for (i = 10; i > 0 ; i--)
-	//	LCDSetCircle(117 - deltaLine, 93, i, RED);	
-}
-
-void drawCircleCursor(int currentPosition, int newPosition){
-	int deltaYcurrent, deltaYnew;
-	
-	if((currentPosition >= 0) && (currentPosition <= 4) && (newPosition >= 0) && (newPosition <= 4)){
-		deltaYcurrent = 20 * currentPosition;
-		deltaYnew = 20 * newPosition;
-	}	
-	else
-		return;
-	
-	LCDSetCircle(117, 13 + deltaYcurrent, 10, RED);
-	LCDSetCircle(117, 13 + deltaYnew, 10, YELLOW);
-}
-
-void drawNumber(int oldNumber, int newNumber, int position){
-	int deltaY;
-	if((position >= 0) && (position <= 4)){
-		deltaY = 20 * position;
-
-	}	
-	else
-		return;
-	
-	LCDPutChar(oldNumber + '0', 110, 9 + deltaY, LARGE, BLACK, BLACK);
-	LCDPutChar(newNumber + '0', 110, 9 + deltaY, LARGE, RED, BLACK);
-}
-
-void drawResultDots(int line){
-	int deltaLine;
-	
-	if((line >= 0) && (line < 4))
-		deltaLine = 26 * line;
-	else
-		return;
-	
-	LCDSetCircle(124 - deltaLine, 112, 3, RED);
-	LCDSetCircle(124 - deltaLine, 124, 3, RED);
-	LCDSetCircle(118 - deltaLine, 118, 3, RED);
-	LCDSetCircle(112 - deltaLine, 112, 3, RED);
-	LCDSetCircle(112 - deltaLine, 124, 3, RED);
-}
-
-void changeAnimation(void){
-	int i;
-	for(i = 0; i < 132; i++){
-		LCDSetRect(0, 0, i, i, FILL, WHITE);
-		delay_ms(5);
-	}
-	for(i = 132; i >= 0; i--){
-		LCDSetRect(132, 132, i, i, FILL, BLACK);
-		delay_ms(5);
-	}
-	
-}
-
-void changeAnimation2(void){
-	int i;
-	for(i = 0; i < 66; i++){
-		LCDSetRect(66 - i, 66 - i, 66 + i, 66 + i, FILL, WHITE);
-		delay_ms(5);
-	}
-	for(i = 66; i >= 0; i--){
-		LCDSetRect(132 - i, 132 - i, 0 + i, 0 + i, FILL, BLACK);
-		delay_ms(5);
-	}
-	
-}

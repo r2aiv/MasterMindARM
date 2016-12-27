@@ -17,19 +17,21 @@ Section Cross References
     lcd.o(.constdata) refers to lcd.o(.constdata) for FONT8x16
     main.o(.text) refers to idiv.o(.text) for __aeabi_idivmod
     main.o(.text) refers to lcd.o(.text) for LCDClearScreen
+    main.o(.text) refers to rand.o(.text) for rand
+    main.o(.text) refers to draw.o(.text) for drawGameNet
     main.o(.text) refers to main.o(.data) for .data
     main.o(.text) refers to main.o(.bss) for .bss
-    main.o(.text) refers to rand.o(.text) for rand
     main.o(.text) refers to printf1.o(i.__0sprintf$1) for __2sprintf
     main.o(.text) refers to delay.o(.text) for delay_ms
     main.o(.text) refers to main.o(.data) for .data
     main.o(.text) refers to lcd.o(.text) for LCDSetCircle
     main.o(.text) refers to lcd.o(.text) for LCDClearScreen
     main.o(.text) refers to main.o(.text) for menuScreen
-    main.o(.text) refers to lcd.o(.text) for LCDSetRect
-    main.o(.text) refers to delay.o(.text) for delay_ms
-    main.o(.text) refers to lcd.o(.text) for LCDSetRect
-    main.o(.text) refers to delay.o(.text) for delay_ms
+    animation.o(.text) refers to lcd.o(.text) for LCDSetRect
+    animation.o(.text) refers to delay.o(.text) for delay_ms
+    animation.o(.text) refers to lcd.o(.text) for LCDSetRect
+    animation.o(.text) refers to delay.o(.text) for delay_ms
+    draw.o(.text) refers to lcd.o(.text) for LCDSetLine
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
@@ -311,8 +313,8 @@ Removing Unused input sections from the image.
     Removing main.o(.text), (36 bytes).
     Removing main.o(.text), (4 bytes).
     Removing main.o(.text), (108 bytes).
-    Removing main.o(.text), (116 bytes).
-    Removing main.o(.text), (116 bytes).
+    Removing animation.o(.text), (116 bytes).
+    Removing animation.o(.text), (116 bytes).
     Removing dadd.o(.text), (484 bytes).
     Removing dmul.o(.text), (284 bytes).
     Removing ddiv.o(.text), (292 bytes).
@@ -334,40 +336,40 @@ Image Symbol Table
     ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  idiv.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
     ../clib/microlib/printf/stubs.s          0x00000000   Number         0  stubs.o ABSOLUTE
     ../clib/microlib/stdio/fputc.c           0x00000000   Number         0  fputc.o ABSOLUTE
     ../clib/microlib/stdio/semi.s            0x00000000   Number         0  semi.o ABSOLUTE
     ../clib/microlib/stdio/streams.c         0x00000000   Number         0  stdout.o ABSOLUTE
     ../clib/microlib/stdlib/rand.c           0x00000000   Number         0  rand.o ABSOLUTE
-    ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
     ../clib/microlib/stubs.s                 0x00000000   Number         0  useno.o ABSOLUTE
+    ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
     ../clib/microlib/stubs.s                 0x00000000   Number         0  iusesemip.o ABSOLUTE
     ../fplib/microlib/fpadd.c                0x00000000   Number         0  dadd.o ABSOLUTE
     ../fplib/microlib/fpdiv.c                0x00000000   Number         0  ddiv.o ABSOLUTE
@@ -377,9 +379,11 @@ Image Symbol Table
     Main.c                                   0x00000000   Number         0  main.o ABSOLUTE
     Retarget.c                               0x00000000   Number         0  retarget.o ABSOLUTE
     SAM7.s                                   0x00000000   Number         0  sam7.o ABSOLUTE
+    animation.c                              0x00000000   Number         0  animation.o ABSOLUTE
     cdrcmple.s                               0x00000000   Number         0  cdrcmple.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
     delay.c                                  0x00000000   Number         0  delay.o ABSOLUTE
+    draw.c                                   0x00000000   Number         0  draw.o ABSOLUTE
     handlers.s                               0x00000000   Number         0  handlers.o ABSOLUTE
     init.s                                   0x00000000   Number         0  init.o ABSOLUTE
     lcd.c                                    0x00000000   Number         0  lcd.o ABSOLUTE
@@ -403,28 +407,29 @@ Image Symbol Table
     .text                                    0x0010015c   Section        0  delay.o(.text)
     .text                                    0x001001ac   Section        0  lcd.o(.text)
     .text                                    0x001007c8   Section        0  main.o(.text)
-    .text                                    0x00101350   Section        0  idiv.o(.text)
-    .text                                    0x0010138c   Section        0  rand.o(.text)
-    .text                                    0x001013c4   Section        0  uidiv.o(.text)
-    .text                                    0x00101404   Section       48  init.o(.text)
-    i.__0sprintf$1                           0x00101434   Section        0  printf1.o(i.__0sprintf$1)
-    i.__scatterload_copy                     0x00101470   Section       28  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x0010148c   Section        4  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x00101490   Section       24  handlers.o(i.__scatterload_zeroinit)
-    i._printf_core                           0x001014a8   Section        0  printf1.o(i._printf_core)
-    _printf_core                             0x001014a8   ARM Code     524  printf1.o(i._printf_core)
-    i._sputc                                 0x001016b8   Section        0  printf1.o(i._sputc)
-    _sputc                                   0x001016b8   ARM Code      20  printf1.o(i._sputc)
-    .constdata                               0x001016cc   Section      776  lcd.o(.constdata)
-    .constdata                               0x001019d4   Section      776  lcd.o(.constdata)
-    .constdata                               0x00101cdc   Section     1552  lcd.o(.constdata)
-    .constdata                               0x001022ec   Section       12  lcd.o(.constdata)
+    .text                                    0x00101138   Section        0  draw.o(.text)
+    .text                                    0x0010136c   Section        0  idiv.o(.text)
+    .text                                    0x001013a8   Section        0  rand.o(.text)
+    .text                                    0x001013e0   Section        0  uidiv.o(.text)
+    .text                                    0x00101420   Section       48  init.o(.text)
+    i.__0sprintf$1                           0x00101450   Section        0  printf1.o(i.__0sprintf$1)
+    i.__scatterload_copy                     0x0010148c   Section       28  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x001014a8   Section        4  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x001014ac   Section       24  handlers.o(i.__scatterload_zeroinit)
+    i._printf_core                           0x001014c4   Section        0  printf1.o(i._printf_core)
+    _printf_core                             0x001014c4   ARM Code     524  printf1.o(i._printf_core)
+    i._sputc                                 0x001016d4   Section        0  printf1.o(i._sputc)
+    _sputc                                   0x001016d4   ARM Code      20  printf1.o(i._sputc)
+    .constdata                               0x001016e8   Section      776  lcd.o(.constdata)
+    .constdata                               0x001019f0   Section      776  lcd.o(.constdata)
+    .constdata                               0x00101cf8   Section     1552  lcd.o(.constdata)
+    .constdata                               0x00102308   Section       12  lcd.o(.constdata)
     .data                                    0x00200000   Section       16  lcd.o(.data)
-    .data                                    0x00200010   Section       32  main.o(.data)
-    status_IRQ                               0x00200018   Data           4  main.o(.data)
-    .data                                    0x00200030   Section        4  rand.o(.data)
-    _rand_state                              0x00200030   Data           4  rand.o(.data)
-    .bss                                     0x00200034   Section      176  main.o(.bss)
+    .data                                    0x00200010   Section       36  main.o(.data)
+    status_IRQ                               0x0020001c   Data           4  main.o(.data)
+    .data                                    0x00200034   Section        4  rand.o(.data)
+    _rand_state                              0x00200034   Data           4  rand.o(.data)
+    .bss                                     0x00200038   Section      176  main.o(.bss)
     STACK                                    0x002000e8   Section     1160  sam7.o(STACK)
     Stack_Top                                0x00200570   Data           0  sam7.o(STACK)
 
@@ -515,47 +520,48 @@ Image Symbol Table
     highScoreScreen                          0x0010085c   ARM Code      56  main.o(.text)
     winScreen                                0x00100894   ARM Code      56  main.o(.text)
     checkValues                              0x001008cc   ARM Code     212  main.o(.text)
-    drawCircleCursor                         0x001009a0   ARM Code      88  main.o(.text)
-    drawNumber                               0x001009f8   ARM Code     172  main.o(.text)
-    drawResultDots                           0x00100aa4   ARM Code     124  main.o(.text)
-    drawCircleLine                           0x00100b20   ARM Code     124  main.o(.text)
-    drawGameNet                              0x00100b9c   ARM Code     132  main.o(.text)
-    resetFlagArray                           0x00100c20   ARM Code      32  main.o(.text)
-    generateNumbers                          0x00100c40   ARM Code      76  main.o(.text)
-    gameScreen                               0x00100c8c   ARM Code    1016  main.o(.text)
-    menuScreen                               0x00101084   ARM Code     440  main.o(.text)
-    helloScreen                              0x0010123c   ARM Code      68  main.o(.text)
-    main                                     0x00101280   ARM Code     208  main.o(.text)
-    __aeabi_idiv                             0x00101350   ARM Code       0  idiv.o(.text)
-    __aeabi_idivmod                          0x00101350   ARM Code      60  idiv.o(.text)
-    rand                                     0x0010138c   ARM Code      36  rand.o(.text)
-    srand                                    0x001013b0   ARM Code      12  rand.o(.text)
-    __aeabi_uidiv                            0x001013c4   ARM Code       0  uidiv.o(.text)
-    __aeabi_uidivmod                         0x001013c4   ARM Code      64  uidiv.o(.text)
-    __scatterload                            0x00101404   ARM Code      40  init.o(.text)
-    __scatterload_rt2                        0x00101404   ARM Code       0  init.o(.text)
-    __0sprintf$1                             0x00101434   ARM Code      56  printf1.o(i.__0sprintf$1)
-    __1sprintf$1                             0x00101434   ARM Code       0  printf1.o(i.__0sprintf$1)
-    __2sprintf                               0x00101434   ARM Code       0  printf1.o(i.__0sprintf$1)
-    __scatterload_copy                       0x00101470   ARM Code      28  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x0010148c   ARM Code       4  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x00101490   ARM Code      24  handlers.o(i.__scatterload_zeroinit)
-    FONT6x8                                  0x001016cc   Data         776  lcd.o(.constdata)
-    FONT8x8                                  0x001019d4   Data         776  lcd.o(.constdata)
-    FONT8x16                                 0x00101cdc   Data        1552  lcd.o(.constdata)
-    Region$$Table$$Base                      0x001022f8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x00102318   Number         0  anon$$obj.o(Region$$Table)
+    resetFlagArray                           0x001009a0   ARM Code      32  main.o(.text)
+    generateNumbers                          0x001009c0   ARM Code      76  main.o(.text)
+    gameScreen                               0x00100a0c   ARM Code    1076  main.o(.text)
+    menuScreen                               0x00100e40   ARM Code     532  main.o(.text)
+    helloScreen                              0x00101054   ARM Code      76  main.o(.text)
+    main                                     0x001010a0   ARM Code     128  main.o(.text)
+    drawGameNet                              0x00101138   ARM Code     132  draw.o(.text)
+    drawCircleLine                           0x001011bc   ARM Code     124  draw.o(.text)
+    drawCircleCursor                         0x00101238   ARM Code      88  draw.o(.text)
+    drawNumber                               0x00101290   ARM Code      96  draw.o(.text)
+    drawResultDots                           0x001012f0   ARM Code     124  draw.o(.text)
+    __aeabi_idiv                             0x0010136c   ARM Code       0  idiv.o(.text)
+    __aeabi_idivmod                          0x0010136c   ARM Code      60  idiv.o(.text)
+    rand                                     0x001013a8   ARM Code      36  rand.o(.text)
+    srand                                    0x001013cc   ARM Code      12  rand.o(.text)
+    __aeabi_uidiv                            0x001013e0   ARM Code       0  uidiv.o(.text)
+    __aeabi_uidivmod                         0x001013e0   ARM Code      64  uidiv.o(.text)
+    __scatterload                            0x00101420   ARM Code      40  init.o(.text)
+    __scatterload_rt2                        0x00101420   ARM Code       0  init.o(.text)
+    __0sprintf$1                             0x00101450   ARM Code      56  printf1.o(i.__0sprintf$1)
+    __1sprintf$1                             0x00101450   ARM Code       0  printf1.o(i.__0sprintf$1)
+    __2sprintf                               0x00101450   ARM Code       0  printf1.o(i.__0sprintf$1)
+    __scatterload_copy                       0x0010148c   ARM Code      28  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x001014a8   ARM Code       4  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x001014ac   ARM Code      24  handlers.o(i.__scatterload_zeroinit)
+    FONT6x8                                  0x001016e8   Data         776  lcd.o(.constdata)
+    FONT8x8                                  0x001019f0   Data         776  lcd.o(.constdata)
+    FONT8x16                                 0x00101cf8   Data        1552  lcd.o(.constdata)
+    Region$$Table$$Base                      0x00102314   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00102334   Number         0  anon$$obj.o(Region$$Table)
     pPIOA                                    0x00200000   Data           4  lcd.o(.data)
     pPIOB                                    0x00200004   Data           4  lcd.o(.data)
     pSPI                                     0x00200008   Data           4  lcd.o(.data)
     pPMC                                     0x0020000c   Data           4  lcd.o(.data)
-    zmienna_1                                0x00200010   Data           4  main.o(.data)
-    zmienna_2                                0x00200014   Data           4  main.o(.data)
-    currentArray                             0x0020001c   Data          20  main.o(.data)
-    flagArray                                0x00200034   Data          36  main.o(.bss)
-    targetArray                              0x00200058   Data          20  main.o(.bss)
-    ifWinArray                               0x0020006c   Data          20  main.o(.bss)
-    ciag                                     0x00200080   Data         100  main.o(.bss)
+    randomSeedGenerated                      0x00200010   Data           4  main.o(.data)
+    zmienna_1                                0x00200014   Data           4  main.o(.data)
+    zmienna_2                                0x00200018   Data           4  main.o(.data)
+    currentArray                             0x00200020   Data          20  main.o(.data)
+    flagArray                                0x00200038   Data          36  main.o(.bss)
+    targetArray                              0x0020005c   Data          20  main.o(.bss)
+    ifWinArray                               0x00200070   Data          20  main.o(.bss)
+    ciag                                     0x00200084   Data         100  main.o(.bss)
     __initial_sp                             0x002004e8   Data         136  sam7.o(STACK)
 
 
@@ -566,40 +572,41 @@ Memory Map of the image
 
   Image Entry point : 0x00100144
 
-  Load Region LR_IROM1 (Base: 0x00100000, Size: 0x0000234c, Max: 0x00040000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x00100000, Size: 0x0000236c, Max: 0x00040000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x00100000, Size: 0x00002318, Max: 0x00040000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x00100000, Size: 0x00002334, Max: 0x00040000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00100000   0x00000144   Code   RO            3    RESET               sam7.o
-    0x00100144   0x00000000   Code   RO          165  * .ARM.Collect$$$$00000000  mc_4.l(entry.o)
-    0x00100144   0x00000004   Code   RO          434    .ARM.Collect$$$$00000001  mc_4.l(entry2.o)
-    0x00100148   0x00000004   Code   RO          436    .ARM.Collect$$$$00000004  mc_4.l(entry5.o)
-    0x0010014c   0x00000000   Code   RO          438    .ARM.Collect$$$$00000008  mc_4.l(entry7b.o)
-    0x0010014c   0x00000000   Code   RO          440    .ARM.Collect$$$$0000000A  mc_4.l(entry8b.o)
-    0x0010014c   0x0000000c   Code   RO          441    .ARM.Collect$$$$0000000B  mc_4.l(entry9a.o)
-    0x00100158   0x00000000   Code   RO          443    .ARM.Collect$$$$0000000D  mc_4.l(entry10a.o)
-    0x00100158   0x00000000   Code   RO          445    .ARM.Collect$$$$0000000F  mc_4.l(entry11a.o)
-    0x00100158   0x00000004   Code   RO          435    .ARM.Collect$$$$00002712  mc_4.l(entry2.o)
+    0x00100144   0x00000000   Code   RO          193  * .ARM.Collect$$$$00000000  mc_4.l(entry.o)
+    0x00100144   0x00000004   Code   RO          462    .ARM.Collect$$$$00000001  mc_4.l(entry2.o)
+    0x00100148   0x00000004   Code   RO          464    .ARM.Collect$$$$00000004  mc_4.l(entry5.o)
+    0x0010014c   0x00000000   Code   RO          466    .ARM.Collect$$$$00000008  mc_4.l(entry7b.o)
+    0x0010014c   0x00000000   Code   RO          468    .ARM.Collect$$$$0000000A  mc_4.l(entry8b.o)
+    0x0010014c   0x0000000c   Code   RO          469    .ARM.Collect$$$$0000000B  mc_4.l(entry9a.o)
+    0x00100158   0x00000000   Code   RO          471    .ARM.Collect$$$$0000000D  mc_4.l(entry10a.o)
+    0x00100158   0x00000000   Code   RO          473    .ARM.Collect$$$$0000000F  mc_4.l(entry11a.o)
+    0x00100158   0x00000004   Code   RO          463    .ARM.Collect$$$$00002712  mc_4.l(entry2.o)
     0x0010015c   0x00000050   Code   RO           30    .text               delay.o
     0x001001ac   0x0000061c   Code   RO           51    .text               lcd.o
-    0x001007c8   0x00000b88   Code   RO           90    .text               main.o
-    0x00101350   0x0000003c   Code   RO          168    .text               mc_4.l(idiv.o)
-    0x0010138c   0x00000038   Code   RO          170    .text               mc_4.l(rand.o)
-    0x001013c4   0x00000040   Code   RO          450    .text               mc_4.l(uidiv.o)
-    0x00101404   0x00000030   Code   RO          465    .text               mc_4.l(init.o)
-    0x00101434   0x0000003c   Code   RO          220    i.__0sprintf$1      mc_4.l(printf1.o)
-    0x00101470   0x0000001c   Code   RO          481    i.__scatterload_copy  mc_4.l(handlers.o)
-    0x0010148c   0x00000004   Code   RO          482    i.__scatterload_null  mc_4.l(handlers.o)
-    0x00101490   0x00000018   Code   RO          483    i.__scatterload_zeroinit  mc_4.l(handlers.o)
-    0x001014a8   0x00000210   Code   RO          225    i._printf_core      mc_4.l(printf1.o)
-    0x001016b8   0x00000014   Code   RO          227    i._sputc            mc_4.l(printf1.o)
-    0x001016cc   0x00000308   Data   RO           54    .constdata          lcd.o
-    0x001019d4   0x00000308   Data   RO           55    .constdata          lcd.o
-    0x00101cdc   0x00000610   Data   RO           56    .constdata          lcd.o
-    0x001022ec   0x0000000c   Data   RO           57    .constdata          lcd.o
-    0x001022f8   0x00000020   Data   RO          479    Region$$Table       anon$$obj.o
+    0x001007c8   0x00000970   Code   RO           90    .text               main.o
+    0x00101138   0x00000234   Code   RO          181    .text               draw.o
+    0x0010136c   0x0000003c   Code   RO          196    .text               mc_4.l(idiv.o)
+    0x001013a8   0x00000038   Code   RO          198    .text               mc_4.l(rand.o)
+    0x001013e0   0x00000040   Code   RO          478    .text               mc_4.l(uidiv.o)
+    0x00101420   0x00000030   Code   RO          493    .text               mc_4.l(init.o)
+    0x00101450   0x0000003c   Code   RO          248    i.__0sprintf$1      mc_4.l(printf1.o)
+    0x0010148c   0x0000001c   Code   RO          509    i.__scatterload_copy  mc_4.l(handlers.o)
+    0x001014a8   0x00000004   Code   RO          510    i.__scatterload_null  mc_4.l(handlers.o)
+    0x001014ac   0x00000018   Code   RO          511    i.__scatterload_zeroinit  mc_4.l(handlers.o)
+    0x001014c4   0x00000210   Code   RO          253    i._printf_core      mc_4.l(printf1.o)
+    0x001016d4   0x00000014   Code   RO          255    i._sputc            mc_4.l(printf1.o)
+    0x001016e8   0x00000308   Data   RO           54    .constdata          lcd.o
+    0x001019f0   0x00000308   Data   RO           55    .constdata          lcd.o
+    0x00101cf8   0x00000610   Data   RO           56    .constdata          lcd.o
+    0x00102308   0x0000000c   Data   RO           57    .constdata          lcd.o
+    0x00102314   0x00000020   Data   RO          507    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Base: 0x00200000, Size: 0x00000570, Max: 0x00010000, ABSOLUTE)
@@ -607,10 +614,9 @@ Memory Map of the image
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00200000   0x00000010   Data   RW           58    .data               lcd.o
-    0x00200010   0x00000020   Data   RW           98    .data               main.o
-    0x00200030   0x00000004   Data   RW          171    .data               mc_4.l(rand.o)
-    0x00200034   0x000000b0   Zero   RW           97    .bss                main.o
-    0x002000e4   0x00000004   PAD
+    0x00200010   0x00000024   Data   RW           96    .data               main.o
+    0x00200034   0x00000004   Data   RW          199    .data               mc_4.l(rand.o)
+    0x00200038   0x000000b0   Zero   RW           95    .bss                main.o
     0x002000e8   0x00000488   Zero   RW            1    STACK               sam7.o
 
 
@@ -622,15 +628,16 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
         80          0          0          0          0        992   delay.o
+       564          0          0          0          0       1440   draw.o
       1564         20       3116         16          0      76867   lcd.o
-      2952        192          0         32        176      78895   main.o
+      2416        192          0         36        176      77741   main.o
          0          0          0          0          0       1444   retarget.o
        324         68          0          0       1160        316   sam7.o
 
     ----------------------------------------------------------------------
-      4920        280       3148         48       1340     158514   Object Totals
+      4948        280       3148         52       1336     158800   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         0          0          0          0          4          0   (incl. Padding)
+         0          0          0          0          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -671,15 +678,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      5836        312       3148         52       1340     158810   Grand Totals
-      5836        312       3148         52       1340     158810   ELF Image Totals
-      5836        312       3148         52          0          0   ROM Totals
+      5864        312       3148         56       1336     159044   Grand Totals
+      5864        312       3148         56       1336     159044   ELF Image Totals
+      5864        312       3148         56          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 8984 (   8.77kB)
+    Total RO  Size (Code + RO Data)                 9012 (   8.80kB)
     Total RW  Size (RW Data + ZI Data)              1392 (   1.36kB)
-    Total ROM Size (Code + RO Data + RW Data)       9036 (   8.82kB)
+    Total ROM Size (Code + RO Data + RW Data)       9068 (   8.86kB)
 
 ==============================================================================
 

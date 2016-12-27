@@ -1,5 +1,5 @@
-#ifndef Lcd_h
-#define Lcd_h
+#ifndef LCD_H
+#define LCD_H
 
 //  *****************************************************************************
 //          lcd.h
@@ -9,6 +9,25 @@
 //
 //    Author:  James P Lynch  August 30, 2007
 //  *****************************************************************************
+
+void InitLcd(void);
+void InitSpi(void);
+void Backlight(unsigned char state);
+void WriteSpiCommand(unsigned int data);
+void WriteSpiData(unsigned int data);
+
+void LCDClearScreen(void);
+void LCDSetXY(int x, int y);
+void LCDSetPixel(int  x, int  y, int  color);
+void LCDSetLine(int x1, int y1, int x2, int y2, int color);
+void LCDSetCircle(int x0, int y0, int radius, int color);
+void LCDSetRect(int x0, int y0, int x1, int y1, unsigned char fill, int color);
+void LCDPutChar(char c, int  x, int  y, int size, int fcolor, int bcolor);
+void LCDPutString (char *lcd_string, const char *font_style, unsigned char x, unsigned char y,
+                   unsigned char fcolor, unsigned char bcolor);
+void LCDPutStr(char *pString, int  x, int  y, int Size, int fColor, int bColor);
+void Delay (unsigned long a);
+extern void delay_ms(unsigned int ms);
 
 #define DISON     0xAF      // Display on
 #define DISOFF    0xAE      // Display off
@@ -114,5 +133,5 @@
 #define   BIT30       0x40000000
 #define   BIT31       0x80000000
 
-#endif   // Lcd_h
+#endif   
 

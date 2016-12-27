@@ -75,30 +75,9 @@
 #include "at91sam7x256.h"
 #include "lcd.h"
 
-
-// **************************************
-//  forward references
-// **************************************
 const unsigned char FONT6x8[97][8];
 const unsigned char FONT8x8[97][8];
 const unsigned char FONT8x16[97][16];
-void InitLcd(void);
-void Backlight(unsigned char state);
-void WriteSpiCommand(unsigned int data);
-void WriteSpiData(unsigned int data);
-
-void LCDClearScreen(void);
-void LCDSetXY(int x, int y);
-void LCDSetPixel(int  x, int  y, int  color);
-void LCDSetLine(int x1, int y1, int x2, int y2, int color);
-void LCDSetRect(int x0, int y0, int x1, int y1, unsigned char fill, int color);
-void LCDSetCircle(int x0, int y0, int radius, int color);
-void LCDPutChar(char c, int  x, int  y, int size, int fcolor, int bcolor);
-void LCDPutString (char *lcd_string, const char *font_style, unsigned char x, unsigned char y,
-                   unsigned char fcolor, unsigned char bcolor);
-void Delay (unsigned long a);
-extern void delay_ms(unsigned int ms);
-
 
 // ******************************************************
 //  Pointers to AT91SAM7X256 peripheral data structures
