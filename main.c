@@ -41,10 +41,10 @@ void clearAfterGame(void);
 /**** END OF FUNCTIONS DECLARATION ****/
 
 /**** GLOBAL VARIABLE DECLARATION ****/
-bool flagArray[9];
-int targetArray[5];
-int currentArray[5] = {1, 1, 1, 1, 1};
-guess ifWinArray[5];
+bool flagArray[10];
+volatile int targetArray[5];
+volatile int currentArray[5] = {1, 1, 1, 1, 1};
+volatile guess ifWinArray[5];
 bool randomSeedGenerated = false;
 char ciag[100];
 int gameTime;
@@ -242,6 +242,7 @@ void menuScreen(void){
 
 void gameScreen (void){
 	int currentOption = 0;
+	bool isWin = false;
 	
 	LCDClearScreen();
 	
@@ -324,8 +325,9 @@ void gameScreen (void){
 			}
 			
 		if(LEFT_KEY_DOWN){
-			LCDPutStr("MENU", 20, 50, SMALL, BLACK, RED);
-			if(checkValues() == true){
+			isWin = checkValues();
+			drawResultFilledDots(0, ifWinArray);
+			if(isWin == true){
 				delay_ms(100);
 				winScreen();
 				return;
@@ -398,28 +400,32 @@ void drawColouredDot(int color, int x, int y){
 }
 
 bool checkValues(void){
-	int i;//, j;
+	int i, j;
 	int ifWinArrayIndex = 0;
 	
-	LCDPutStr("COS", 20, 50, SMALL, BLACK, RED);
 	//checking color and place of dots
-	
 	for(i = 0; i < 5; i++){
 		//checking good position
 		if(currentArray[i] == targetArray[i]){
-			LCDPutStr("FOR", 20, 60, SMALL, BLACK, RED);
 			ifWinArray[ifWinArrayIndex] = GOOD;
 			ifWinArrayIndex++;
-		}/*
+		}
 		else{
 			for(j = 0; j < 5; j++){
-				//checking good color
-				if(currentArray[i] == targetArray[j]){
-					ifWinArray[ifWinArrayIndex] = COLOR;
-					ifWinArrayIndex++;
+				//checking good number
+				if(j != i){
+					if(currentArray[i] == targetArray[j]){
+						ifWinArray[ifWinArrayIndex] = BAD_POSITION;
+						ifWinArrayIndex++;
+						j = 100;
+					}
 				}
 			}
-		}*/
+			if(j == 5){
+				ifWinArray[ifWinArrayIndex] = BAD;
+				ifWinArrayIndex++;	
+			}
+		}
 	}
 	
 	//checking targetArray

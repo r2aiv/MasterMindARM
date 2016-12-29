@@ -22,7 +22,7 @@ Dialog DLL:      TARMATS.DLL V1.21.0.0
  
 <h2>Project:</h2>
 E:\Projekty\Systemy Wbudowane\MasterMind.uvproj
-Project File Date:  12/27/2016
+Project File Date:  12/29/2016
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 3 (build 300)', folder: 'F:\Keil_v5\ARM\ARMCC\Bin'
@@ -41,17 +41,19 @@ lcd.c(144): warning:  #61-D: integer operation result is out of range
 T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
 lcd.c: 2 warnings, 0 errors
 compiling Main.c...
-draw.h(10): warning:  #1-D: last line of file ends without a newline
+draw.h(16): warning:  #1-D: last line of file ends without a newline
   #endif
-Main.c: 1 warning, 0 errors
+Main.c(329): warning:  #167-D: argument of type "volatile guess *" is incompatible with parameter of type "guess *"
+                        drawResultFilledDots(0, ifWinArray);
+Main.c: 2 warnings, 0 errors
 compiling animation.c...
 compiling draw.c...
-draw.h(10): warning:  #1-D: last line of file ends without a newline
+draw.h(16): warning:  #1-D: last line of file ends without a newline
   #endif
 draw.c: 1 warning, 0 errors
 linking...
-Program Size: Code=6544 RO-data=3148 RW-data=56 ZI-data=1336  
-".\Flash\Blinky.axf" - 0 Error(s), 4 Warning(s).
+Program Size: Code=7508 RO-data=3148 RW-data=56 ZI-data=1344  
+".\Flash\Blinky.axf" - 0 Error(s), 5 Warning(s).
 
 *** Performing Cross-Module-Optimization:
 compiling Retarget.c...
@@ -65,12 +67,14 @@ lcd.c(144): warning:  #61-D: integer operation result is out of range
 T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
 lcd.c: 2 warnings, 0 errors
 compiling Main.c...
-draw.h(10): warning:  #1-D: last line of file ends without a newline
+draw.h(16): warning:  #1-D: last line of file ends without a newline
   #endif
-Main.c: 1 warning, 0 errors
+Main.c(329): warning:  #167-D: argument of type "volatile guess *" is incompatible with parameter of type "guess *"
+                        drawResultFilledDots(0, ifWinArray);
+Main.c: 2 warnings, 0 errors
 compiling animation.c...
 linking...
-Program Size: Code=6016 RO-data=3148 RW-data=56 ZI-data=1336  
+Program Size: Code=6988 RO-data=3148 RW-data=56 ZI-data=1344  
 compiling Retarget.c...
 compiling delay.c...
 compiling lcd.c...
@@ -82,16 +86,18 @@ lcd.c(144): warning:  #61-D: integer operation result is out of range
 T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
 lcd.c: 2 warnings, 0 errors
 compiling Main.c...
-draw.h(10): warning:  #1-D: last line of file ends without a newline
+draw.h(16): warning:  #1-D: last line of file ends without a newline
   #endif
-Main.c: 1 warning, 0 errors
+Main.c(329): warning:  #167-D: argument of type "volatile guess *" is incompatible with parameter of type "guess *"
+                        drawResultFilledDots(0, ifWinArray);
+Main.c: 2 warnings, 0 errors
 compiling animation.c...
 linking...
-Program Size: Code=6016 RO-data=3148 RW-data=56 ZI-data=1336  
+Program Size: Code=6988 RO-data=3148 RW-data=56 ZI-data=1344  
 FromELF: creating hex file...
-".\Flash\Blinky.axf" - 0 Error(s), 3 Warning(s).
+".\Flash\Blinky.axf" - 0 Error(s), 4 Warning(s).
 *** Completed Cross-Module-Optimization after 3 iteration(s).
-Build Time Elapsed:  00:00:09
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

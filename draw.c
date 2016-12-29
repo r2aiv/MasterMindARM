@@ -68,3 +68,83 @@ void drawResultDots(int line){
 	LCDSetCircle(112 - deltaLine, 112, 3, RED);
 	LCDSetCircle(112 - deltaLine, 124, 3, RED);
 }
+
+void drawResultFilledDots(int line, guess values[5]){
+	int deltaLine, i;
+	
+	if((line >= 0) && (line < 4))
+		deltaLine = 26 * line;
+	else
+		return;
+	
+	LCDSetCircle(124 - deltaLine, 112, 3, RED);
+	if(values[0] == GOOD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(124 - deltaLine, 112, i, GREEN);
+	}
+	else if(values[0] == BAD_POSITION){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(124 - deltaLine, 112, i, YELLOW);
+	}
+	else if(values[0] == BAD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(124 - deltaLine, 112, i, RED);
+	}
+	
+	LCDSetCircle(124 - deltaLine, 124, 3, RED);
+	if(values[1] == GOOD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(124 - deltaLine, 124, i, GREEN);
+	}
+	else if(values[1] == BAD_POSITION){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(124 - deltaLine, 124, i, YELLOW);
+	}
+	else if(values[1] == BAD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(124 - deltaLine, 124, i, RED);
+	}
+	
+	LCDSetCircle(118 - deltaLine, 118, 3, RED);
+		if(values[2] == GOOD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(118 - deltaLine, 118, i, GREEN);
+	}
+	else if(values[2] == BAD_POSITION){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(118 - deltaLine, 118, i, YELLOW);
+	}
+	else if(values[2] == BAD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(118 - deltaLine, 118, i, RED);
+	}
+	
+	LCDSetCircle(112 - deltaLine, 112, 3, RED);
+		if(values[3] == GOOD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(112 - deltaLine, 112, i, GREEN);
+	}
+	else if(values[3] == BAD_POSITION){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(112 - deltaLine, 112, i, YELLOW);
+	}
+	else if(values[3] == BAD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(112 - deltaLine, 112, i, RED);
+	}
+	
+	LCDSetCircle(112 - deltaLine, 124, 3, RED);
+		if(values[4] == GOOD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(112 - deltaLine, 124, i, GREEN);
+	}
+	else if(values[4] == BAD_POSITION){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(112 - deltaLine, 124, i, YELLOW);
+	}
+	else if(values[4] == BAD){
+		for(i = 0; i < 3; i++)
+			LCDSetCircle(112 - deltaLine, 124, i, RED);
+	}
+	
+}

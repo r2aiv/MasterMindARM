@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060300: Last Updated: Thu Dec 29 11:55:48 2016
+;#<FEEDBACK># ARM Linker, 5060300: Last Updated: Thu Dec 29 13:43:35 2016
 ;VERSION 0.2
 ;FILE animation.o
 changeAnimation <= USED 0
@@ -12,5 +12,6 @@ LCDSetRect <= USED 0
 ;FILE main.o
 authorScreen <= USED 0
 drawColouredDot <= USED 0
+tim0_isr <= USED 0
 ;FILE retarget.o
 _sys_exit <= USED 0
