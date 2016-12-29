@@ -9,7 +9,7 @@ I (delay.h)(0x585FCE30)
 F (.\lcd.c)(0x5862A99C)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-IF:\Keil_v5\ARM\RV31\INC-IF:\Keil_v5\ARM\CMSIS\Include-IF:\Keil_v5\ARM\Inc\Atmel\SAM7X-D__UVISION_VERSION="521"-o .\flash\lcd.o --depend .\flash\lcd.d)
 I (F:\Keil_v5\ARM\Inc\Atmel\SAM7X\at91sam7x256.h)(0x570F6D66)
 I (lcd.h)(0x5862A99C)
-F (.\Main.c)(0x5862B1B6)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-IF:\Keil_v5\ARM\RV31\INC-IF:\Keil_v5\ARM\CMSIS\Include-IF:\Keil_v5\ARM\Inc\Atmel\SAM7X-D__UVISION_VERSION="521"-o .\flash\main.o --depend .\flash\main.d)
+F (.\Main.c)(0x5864EBB1)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-IF:\Keil_v5\ARM\RV31\INC-IF:\Keil_v5\ARM\CMSIS\Include-IF:\Keil_v5\ARM\Inc\Atmel\SAM7X-D__UVISION_VERSION="521"-o .\flash\main.o --depend .\flash\main.d)
 I (F:\Keil_v5\ARM\Inc\Atmel\SAM7X\AT91SAM7X256.H)(0x570F6D66)
 I (include/lib_AT91SAM7X256.h)(0x5279F464)
 I (F:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x574E9286)
@@ -17,10 +17,10 @@ I (F:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x574E9286)
 I (F:\Keil_v5\ARM\ARMCC\include\ctime)(0x574E9286)
 I (F:\Keil_v5\ARM\ARMCC\include\time.h)(0x574E9286)
 I (lcd.h)(0x5862A99C)
-I (animation.h)(0x5862A9AE)
+I (animation.h)(0x5862B255)
 I (draw.h)(0x5862B176)
 F (.\animation.c)(0x5862A9AD)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-IF:\Keil_v5\ARM\RV31\INC-IF:\Keil_v5\ARM\CMSIS\Include-IF:\Keil_v5\ARM\Inc\Atmel\SAM7X-D__UVISION_VERSION="521"-o .\flash\animation.o --depend .\flash\animation.d)
-I (animation.h)(0x5862A9AE)
+I (animation.h)(0x5862B255)
 I (lcd.h)(0x5862A99C)
 F (.\draw.c)(0x5862B176)(-c --cpu ARM7TDMI -D__EVAL -D__MICROLIB -g -O2-IF:\Keil_v5\ARM\RV31\INC-IF:\Keil_v5\ARM\CMSIS\Include-IF:\Keil_v5\ARM\Inc\Atmel\SAM7X-D__UVISION_VERSION="521"-o .\flash\draw.o --depend .\flash\draw.d)
 I (draw.h)(0x5862B176)

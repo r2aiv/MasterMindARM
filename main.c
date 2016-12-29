@@ -18,7 +18,7 @@ enum colors {WHITE_COLOR, BLACK_COLOR, RED_COLOR, GREEN_COLOR, BLUE_COLOR, CYAN_
 /**** DEFINITION OF GUESSING TYPE ****/
 typedef int guess;
 #define BAD 0
-#define COLOR 1
+#define BAD_POSITION 1
 #define GOOD 2
 
 /**** FUNCTIONS DECLARATIONS ****/
@@ -36,16 +36,21 @@ void authorScreen(void);
 //GAME LOGIC
 void generateNumbers(void);
 void resetFlagArray(void);
-void clearCurentTab(void);
 bool checkValues(void);
+void clearAfterGame(void);
 /**** END OF FUNCTIONS DECLARATION ****/
 
 /**** GLOBAL VARIABLE DECLARATION ****/
 bool flagArray[9];
 int targetArray[5];
-int currentArray[5] = {1, 2, 3, 4, 5};
+int currentArray[5] = {1, 1, 1, 1, 1};
 guess ifWinArray[5];
 bool randomSeedGenerated = false;
+char ciag[100];
+int gameTime;
+volatile int globalTime;
+static volatile unsigned int status_IRQ;
+bool fromReturn = false;
 
 /**** LED DEFINE INIT ****/
 //TODO lines 67-81 -> dead code
@@ -81,68 +86,20 @@ bool randomSeedGenerated = false;
 #define JOY_PUSH_DOWN (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA8) == 0)
 #define JOY_PUSHED (((AT91C_BASE_PIOA -> PIO_PDSR) & AT91C_PIO_PA15) == 0)
 
-
-#define LEFT_STICK (!((AT91C_BASE_PIOA->PIO_PDSR) & AT91C_PIO_PA7))
-#define RIGHT_STICK (!((AT91C_BASE_PIOA->PIO_PDSR) & AT91C_PIO_PA14))
-char ciag[100];
-int zmienna_1;
-volatile int zmienna_2;
-static volatile unsigned int status_IRQ;
-
-
 // Timer0 ISR
 __irq void tim0_isr (void)  {
 
   volatile int dummy = AT91C_BASE_TC0->TC_SR;      //  Interrupt Ack - odczytanie rejestru statusu kasuje flage zgloszenia komparacji timera
   AT91C_BASE_AIC->AIC_ICCR  = (1 << AT91C_ID_TC0);        //  Interrupt Clear Command Register - skasowanie flagi zgloszenia przerwania w AIC
 	
-//..................................
-//tu mozemy wstawic swoje instrukcje	
-	zmienna_2++;
-			if(zmienna_2 % 100 == 0){
-			zmienna_1 = zmienna_1 + 1;
+	globalTime++;
+			if(globalTime % 100 == 0){
+			gameTime = gameTime + 1;
 
 		}
-//..................................
 
-//tak zakonczamy przerwanie
   *AT91C_AIC_EOICR = 0;                                   // End of Interrupt
 }
-
-__irq void pioIsr(void) 
-{
-		//kopiujemy zawartosc rejestru PIO_ISR do zmiennej status
-		status_IRQ = AT91C_BASE_PIOA->PIO_ISR;
-		//teraz flagi w PIO_ISR sa juz skasowane
-		
-	//..................................
-	//kod uzytkownika
-
-		
-		//przechodzimy do analizy zawartosci zmiennej status
-		//przykladowo:
-
-	if (status_IRQ & (1<<7)) //jesli PA7 wywolalo przerwanie... (dowolna zmiana stanu na linii PA7 = wcisniecie lub puszczenie klawisza)
-		{
-			//kod dla zmiany PA7
-			if (LEFT_STICK) //dodatkowo sprawdzamy, czy aktualny stan to wcisniety klawisz? (czyli zdarzenie, które wystapilo to wcisniecie)
-			{
-				zmienna_1--;
-
-			}
-		}
-		if (status_IRQ & (1<<14)) //jesli PA14 wywolalo przerwanie... (dowolna zmiana stanu na linii PA8 = wcisniecie lub puszczenie klawisza)
-		{
-			//kod dla PA8...
-			zmienna_1++;
-		}
-	//..................................
-
-
- //tak zakonczamy przerwanie
-	AT91F_AIC_AcknowledgeIt(AT91C_BASE_AIC);
-}
-
 
 int main(void){
 	
@@ -166,11 +123,8 @@ int main(void){
 	AT91C_BASE_AIC->AIC_IECR = (1 << AT91C_ID_TC0); 
 	//A tu sie konczy
 	
-	
-	
-	zmienna_1=0;
-	zmienna_2=0;
-
+	gameTime=0;
+	globalTime=0;
 	
 	//Enable clock of the PIO
 	AT91C_BASE_PMC -> PMC_PCER = (1 << AT91C_ID_PIOA);
@@ -183,20 +137,21 @@ int main(void){
 	helloScreen();
 }
 
-
-
-//TODO: add visual efects. Some kind of gradient
 void helloScreen(void){
 	LCDClearScreen();
 	LED_BCK_ON;	
-	//LCDWrite130x130bmp();
-	LCDPutStr("MASTERMIND", 35, 25, LARGE, BLACK, RED);
-	//TODO dodac jakie wizualne efekty
-	while(1)
-	if(LEFT_KEY_DOWN){
-		delay_ms(50);
-		//changeAnimation2();
-		menuScreen();
+
+	while(1){
+		if(fromReturn == true){
+			fromReturn = false;
+			LCDClearScreen();
+		}
+		LCDPutStr("MASTERMIND", 35, 25, LARGE, BLACK, RED);
+		if(LEFT_KEY_DOWN){
+			delay_ms(50);
+			//changeAnimation2();
+			menuScreen();
+		}
 	}
 }
 
@@ -204,11 +159,15 @@ void helloScreen(void){
 void menuScreen(void){
 	volatile int currentOption = 0;
 	volatile int runOption = 0;
-	zmienna_2 = 0;
+	globalTime = 0;
 	
 	LCDClearScreen();
-	while(1){
-		
+	
+	while(1){	
+		if(fromReturn == true){
+			fromReturn = false;
+			LCDClearScreen();
+		}
 		LCDPutStr("MENU", 20, 50, SMALL, BLACK, RED);
 		LCDPutStr("1.NOWA GRA", 50, 10, SMALL, BLACK, RED);
 		LCDPutStr("2.NAJLEPSZE WYNIKI", 70, 10, SMALL, BLACK, RED);
@@ -218,29 +177,34 @@ void menuScreen(void){
 		
 		switch(currentOption){
 			case 0:
-				//TODO: starting new game
 				if(runOption){
 					//changeAnimation();
 					if(randomSeedGenerated == false){
 						randomSeedGenerated = true;
-						srand(zmienna_2);
+						srand(globalTime);
 					}
+					runOption = 0;
 					gameScreen();
 				}
 				LCDSetCircle(53, 5,3, YELLOW);
 				break;
+				
 			case 1:
-				//TODO: opening highscores
-				if(runOption)
+				if(runOption){
+					runOption = 0;
 					highScoreScreen();
+				}
 				LCDSetCircle(73, 5,3, RED);
 				break;
+				
 			case 2:
-				//TODO: opening options
-				if(runOption)
+				if(runOption){
+					runOption = 0;
 					optionScreen();
+				}
 				LCDSetCircle(93, 5,3, RED);
 				break;
+				
 			/*Author screen
 				case 3:
 				if(runOption)
@@ -255,23 +219,25 @@ void menuScreen(void){
 				currentOption++;
 				delay_ms(50);
 				LCDClearScreen();
-			
 		}
+		
 		if(JOY_PUSH_UP || JOY_PUSH_LEFT){
 			if(currentOption > 0)
 				currentOption--;
 				delay_ms(50);
 				LCDClearScreen();
 		}
-		if(RIGHT_KEY_DOWN)
-			//return;
-			helloScreen();
+		
+		if(RIGHT_KEY_DOWN){
+			//helloScreen();
+			fromReturn = true;
+			return;
+		}
 		
 		else if(JOY_PUSHED || LEFT_KEY_DOWN){
 			runOption = 1;
 		}	
 	}
-	
 }
 
 void gameScreen (void){
@@ -316,14 +282,14 @@ void gameScreen (void){
 	LCDPutChar(targetArray[4] + '0', 84, 89, LARGE, RED, BLACK);
 	
 	/////////////////	
-	zmienna_2 = 0;
-	zmienna_1 = 0;
+	globalTime = 0;
+	gameTime = 0;
 	
 	drawCircleCursor(1, currentOption);
 	
 	while(1){
 
-		sprintf(ciag, "CZAS:%d  ", zmienna_1);
+		sprintf(ciag, "CZAS:%d  ", gameTime);
 		LCDPutStr(ciag, 6, 5, SMALL, BLACK, RED);
 		
 		if(JOY_PUSH_UP)
@@ -362,6 +328,7 @@ void gameScreen (void){
 			if(checkValues() == true){
 				delay_ms(100);
 				winScreen();
+				return;
 			}
 			else{
 				//drawing result array
@@ -370,21 +337,37 @@ void gameScreen (void){
 		}
 		
 		if(RIGHT_KEY_DOWN){
-			//return;
-			helloScreen();
-			zmienna_2 = 0;
+			globalTime = 0;
+			fromReturn = true;
+			delay_ms(100);
+			return;
 		}
 	}
 	
 }
 
+void clearAfterGame(void){
+	int i;
+	
+	for(i = 0; i < 5; i++){
+		targetArray[i] = 1;
+		currentArray[i] = 1;
+		ifWinArray[i] = 1;
+	}
+}
+
 void winScreen(void){
 	LCDClearScreen();
+	
 	while(1){
 		LCDPutStr("WYGRALES", 120, 70, SMALL, BLACK, RED);
-		if(RIGHT_KEY_DOWN)
-		//	return;
-		helloScreen();
+		clearAfterGame();
+		
+		if(RIGHT_KEY_DOWN){
+			fromReturn = true;
+			delay_ms(100);
+			return;
+		}
 	}
 }
 
@@ -398,6 +381,7 @@ void generateNumbers(void){
 			targetArray[i] = (rand() % 9) + 1;
 		}
 		while(flagArray[targetArray[i]] == true);
+		
 		flagArray[targetArray[i]] = true;
 	}
 }
@@ -409,22 +393,22 @@ void resetFlagArray(void){
 		flagArray[i] = false;
 }
 
-//TODO - implement
 void drawColouredDot(int color, int x, int y){
 	LCDSetCircle(x, y, 10, color);	
 }
 
-//TODO - implement
 bool checkValues(void){
 	int i;//, j;
 	int ifWinArrayIndex = 0;
+	
 	LCDPutStr("COS", 20, 50, SMALL, BLACK, RED);
 	//checking color and place of dots
+	
 	for(i = 0; i < 5; i++){
 		//checking good position
 		if(currentArray[i] == targetArray[i]){
 			LCDPutStr("FOR", 20, 60, SMALL, BLACK, RED);
-			ifWinArray[ifWinArrayIndex] = 1;
+			ifWinArray[ifWinArrayIndex] = GOOD;
 			ifWinArrayIndex++;
 		}/*
 		else{
@@ -440,18 +424,13 @@ bool checkValues(void){
 	
 	//checking targetArray
 	for(i = 0; i < 5; i++){
-		if(ifWinArray[i] != 1){
+		if(ifWinArray[i] != GOOD){
 			LCDPutStr("ZLE", 20, 50, SMALL, BLACK, RED);
 			return false;
 		}
 	}
 	LCDPutStr("DOBRZE", 20, 50, SMALL, BLACK, RED);
 	return true;
-}
-
-//TODO - implement
-void clearCurentTab(void){
-	
 }
 
 void highScoreScreen(void){
