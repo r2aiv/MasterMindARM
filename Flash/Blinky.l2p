@@ -4,6 +4,8 @@
 ".\flash\delay.o"
 ".\flash\lcd.o"
 ".\flash\main.o"
+".\flash\animation.o"
+".\flash\draw.o"
 --library_type=microlib --strict --scatter ".\Flash\Blinky.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
