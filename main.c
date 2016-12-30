@@ -12,8 +12,8 @@ typedef int bool;
 #define true 1
 #define false 0
 
-/**** DEFINITION OF COLORS ENUM ****/
-enum colors {WHITE_COLOR, BLACK_COLOR, RED_COLOR, GREEN_COLOR, BLUE_COLOR, CYAN_COLOR, MAGENTA_COLOR, YELLOW_COLOR, BROWN_COLOR, ORANGE_COLOR, PINK_COLOR};
+/**** DEFINITION OF DIFFICULT ENUM ****/
+enum difficult {EASY, NORMAL, HARD};
 
 /**** DEFINITION OF GUESSING TYPE ****/
 typedef int guess;
@@ -46,17 +46,20 @@ void saveResultValues(void);
 
 /**** GLOBAL VARIABLE DECLARATION ****/
 bool flagArray[10];
-volatile int targetArray[5];
-volatile int currentArray[5] = {1, 1, 1, 1, 1};
-volatile guess ifWinArray[5];
+int targetArray[5];
+int currentArray[5] = {1, 1, 1, 1, 1};
+guess ifWinArray[5];
 bool randomSeedGenerated = false;
 char ciag[100];
 int gameTime;
 volatile int globalTime;
 static volatile unsigned int status_IRQ;
 bool fromReturn = false;
-volatile int chooseHistoryArray[3][5];
-volatile guess resultHistoryArray[3][5];
+int chooseHistoryArray[3][5];
+guess resultHistoryArray[3][5];
+int atempts = 5;
+int difficult;
+bool devMode = true;
 
 /**** LED DEFINE INIT ****/
 //TODO lines 67-81 -> dead code
@@ -156,7 +159,7 @@ void helloScreen(void){
 		}
 		LCDPutStr("MASTERMIND", 35, 25, LARGE, BLACK, RED);
 		if(LEFT_KEY_DOWN){
-			delay_ms(50);
+			delay_ms(100);
 			//changeAnimation2();
 			menuScreen();
 		}
@@ -170,12 +173,14 @@ void menuScreen(void){
 	globalTime = 0;
 	
 	LCDClearScreen();
-	
+		
 	while(1){	
 		if(fromReturn == true){
 			fromReturn = false;
 			LCDClearScreen();
+
 		}
+
 		LCDPutStr("MENU", 20, 50, SMALL, BLACK, RED);
 		LCDPutStr("1.NOWA GRA", 50, 10, SMALL, BLACK, RED);
 		LCDPutStr("2.NAJLEPSZE WYNIKI", 70, 10, SMALL, BLACK, RED);
@@ -195,6 +200,8 @@ void menuScreen(void){
 					gameScreen();
 				}
 				LCDSetCircle(53, 5,3, YELLOW);
+				LCDSetCircle(73, 5,3, BLACK);
+				LCDSetCircle(93, 5,3, BLACK);
 				break;
 				
 			case 1:
@@ -202,7 +209,9 @@ void menuScreen(void){
 					runOption = 0;
 					highScoreScreen();
 				}
+				LCDSetCircle(53, 5,3, BLACK);
 				LCDSetCircle(73, 5,3, RED);
+				LCDSetCircle(93, 5,3, BLACK);
 				break;
 				
 			case 2:
@@ -210,6 +219,8 @@ void menuScreen(void){
 					runOption = 0;
 					optionScreen();
 				}
+				LCDSetCircle(53, 5,3, BLACK);
+				LCDSetCircle(73, 5,3, BLACK);
 				LCDSetCircle(93, 5,3, RED);
 				break;
 				
@@ -225,25 +236,24 @@ void menuScreen(void){
 		if(JOY_PUSH_DOWN || JOY_PUSH_RIGHT){
 			if(currentOption < 2)
 				currentOption++;
-				delay_ms(50);
-				LCDClearScreen();
+				delay_ms(100);
 		}
 		
 		if(JOY_PUSH_UP || JOY_PUSH_LEFT){
 			if(currentOption > 0)
 				currentOption--;
 				delay_ms(100);
-				LCDClearScreen();
 		}
 		
 		if(RIGHT_KEY_DOWN){
-			//helloScreen();
 			fromReturn = true;
+			delay_ms(100);
 			return;
 		}
 		
-		else if(JOY_PUSHED || LEFT_KEY_DOWN){
+		if(JOY_PUSHED || LEFT_KEY_DOWN){
 			runOption = 1;
+			delay_ms(100);
 		}	
 	}
 }
@@ -257,42 +267,45 @@ void gameScreen (void){
 	
 	//INITIALIZATION
 	generateNumbers();
+	switch(difficult){
+		case EASY:
+			atempts = 999;
+			break;
+		
+		case NORMAL:
+			atempts = 20;
+			break;
+		
+		case HARD:
+			atempts = 8;
+			break;
+	}
 	
 	drawGameNet();
 	drawCircleLine(0);
 	drawCircleLine(1);
 	drawCircleLine(2);
 	drawCircleLine(3);
-		/*
-	LCDPutChar(currentArray[0] + '0', 110, 9, LARGE, RED, BLACK); //znak w kole
-	LCDPutChar(currentArray[1] + '0', 110, 29, LARGE, RED, BLACK); //znak w kole
-	LCDPutChar(currentArray[2] + '0', 110, 49, LARGE, RED, BLACK); //znak w kole
-	LCDPutChar(currentArray[3] + '0', 110, 69, LARGE, RED, BLACK); //znak w kole
-	LCDPutChar(currentArray[4] + '0', 110, 89, LARGE, RED, BLACK); //znak w kole
-	*/
-	
+
 	drawNumberLine(currentArray, 0);
 
-	//LCDPutStr("CZAS: xxxx", 6, 5, SMALL, BLACK, RED);
-	LCDPutStr("ILOSC PROB: x", 16, 5, SMALL, BLACK, RED);
-	
 	drawResultDots(1);
 	drawResultDots(2);
 	drawResultDots(3);
 	
 	LCDSetCircle(124, 112, 3, RED);
-	LCDSetCircle(124, 112, 2, BLUE);
-	LCDSetCircle(124, 112, 1, BLUE);
 	LCDSetCircle(124, 124, 3, RED);
 	LCDSetCircle(118, 118, 3, RED);
 	LCDSetCircle(112, 112, 3, RED);
 	LCDSetCircle(112, 124, 3, RED);
 	
-	LCDPutChar(targetArray[0] + '0', 5, 102, SMALL, RED, BLACK);
-	LCDPutChar(targetArray[1] + '0', 5, 107, SMALL, RED, BLACK);
-	LCDPutChar(targetArray[2] + '0', 5, 112, SMALL, RED, BLACK);
-	LCDPutChar(targetArray[3] + '0', 5, 117, SMALL, RED, BLACK);
-	LCDPutChar(targetArray[4] + '0', 5, 122, SMALL, RED, BLACK);
+	if(devMode == true){
+		LCDPutChar(targetArray[0] + '0', 5, 102, SMALL, RED, BLACK);
+		LCDPutChar(targetArray[1] + '0', 5, 107, SMALL, RED, BLACK);
+		LCDPutChar(targetArray[2] + '0', 5, 112, SMALL, RED, BLACK);
+		LCDPutChar(targetArray[3] + '0', 5, 117, SMALL, RED, BLACK);
+		LCDPutChar(targetArray[4] + '0', 5, 122, SMALL, RED, BLACK);
+	}
 	
 	/////////////////	
 	globalTime = 0;
@@ -304,6 +317,9 @@ void gameScreen (void){
 
 		sprintf(ciag, "CZAS:%d  ", gameTime);
 		LCDPutStr(ciag, 6, 5, SMALL, BLACK, RED);
+		sprintf(ciag, "ILOSC PROB:%d  ", atempts);
+		LCDPutStr(ciag, 16, 5, SMALL, BLACK, RED);
+		
 		
 		if(JOY_PUSH_UP)
 			if((currentArray[currentOption] < 9) && (currentArray[currentOption] >= 1)){
@@ -342,20 +358,14 @@ void gameScreen (void){
 			//drawResultFilledDots(0, ifWinArray);
 			saveChoosenValues();
 			saveResultValues();
+			atempts--;
 			for(i = 0; i < 3; i++){
 				drawNumberLine(chooseHistoryArray[i], i + 1);
 				drawResultFilledDots(i + 1, resultHistoryArray[i]);
 			}
 			if(isWin == true){
-				clearChooseHistoryArray();
-				clearResultHistoryArray();
-				clearAfterGame();
 				winScreen();
 				return;
-			}
-			else{
-				//drawing result array
-				//drawing last choice
 			}
 		}
 		
@@ -366,6 +376,12 @@ void gameScreen (void){
 			clearResultHistoryArray();
 			clearAfterGame();
 			delay_ms(100);
+			return;
+		}
+		
+		if(atempts == 0){
+			delay_ms(100);
+			LCDClearScreen();
 			return;
 		}
 	}
@@ -385,10 +401,16 @@ void clearAfterGame(void){
 void winScreen(void){
 	LCDClearScreen();
 	
+	LCDPutStr("!!WYGRALES!!", 20, 17, LARGE, BLACK, RED);	
+	LCDPutStr("TWOJ CZAS TO:", 50, 15, MEDIUM, BLACK, RED);	
+	LCDPutStr("TWOJ WYNIK TO:", 80, 12, MEDIUM, BLACK, RED);	
+	
+	clearChooseHistoryArray();
+	clearResultHistoryArray();
+	clearAfterGame();
+	
 	while(1){
-		LCDPutStr("WYGRALES", 120, 70, SMALL, BLACK, RED);
-		clearAfterGame();
-		
+
 		if(RIGHT_KEY_DOWN){
 			fromReturn = true;
 			delay_ms(100);
@@ -463,23 +485,119 @@ bool checkValues(void){
 
 void highScoreScreen(void){
 	LCDClearScreen();
+	LCDPutStr("NAJLEPSZE WYNIKI", 20, 15, SMALL, BLACK, RED);
+	
 	while(1){
-		LCDPutStr("NAJLEPSZE WYNIKI", 20, 15, SMALL, BLACK, RED);
-		
-		if(RIGHT_KEY_DOWN)
-			menuScreen();
-			//return;
+		if(RIGHT_KEY_DOWN){
+			fromReturn = true;
+			delay_ms(100);
+			return;
+		}
 	}
 }
 
 void optionScreen(void){
+	int currentOption = 0;
+	bool leftPushed = false;
+	bool rightPushed = false;
 	LCDClearScreen();
+
 	while(1){
-		LCDPutStr("OPCJE", 20, 45, SMALL, BLACK, RED);
+		LCDPutStr("OPCJE", 20, 45, LARGE, BLACK, RED);
+		LCDPutStr("POZIOM TRUDNOSCI", 50, 2, MEDIUM, BLACK, RED);
+		LCDPutStr("DEV MODE", 70, 2, MEDIUM, BLACK, RED);
 		
-		if(RIGHT_KEY_DOWN)
-			menuScreen();
-			//return;
+		if(devMode == true)
+			LCDPutStr("TAK", 80, 2, SMALL, BLACK, RED);
+		if(devMode == false)
+			LCDPutStr("NIE", 80, 2, SMALL, BLACK, RED);
+		
+		switch(difficult){
+			case EASY:
+				LCDPutStr("LATWY", 60, 10, SMALL, BLACK, RED);
+				break;
+			
+			case NORMAL:
+				LCDPutStr("NORMALNY", 60, 10, SMALL, BLACK, RED);
+				break;
+			
+			case HARD:
+				LCDPutStr("TRUDNY", 60, 10, SMALL, BLACK, RED);
+				break;
+		}
+		
+		switch(currentOption){
+			case 0:
+				
+				if(leftPushed == true){
+					if(difficult > 0){
+						difficult--;
+					}
+					leftPushed = false;
+				}
+				
+				if(rightPushed == true){
+					if(difficult < 2){
+						difficult++;
+					}
+					rightPushed = false;
+				}
+				
+				break;
+				
+			case 1:
+				
+				if(leftPushed == true){
+					if(devMode == true){
+						devMode = false;
+					}						
+					leftPushed = false;
+				}
+				
+				if(rightPushed == true){
+					if(devMode == false){
+						devMode = true;
+					}
+					rightPushed = false;
+				}				
+				break;
+		}
+		
+		if(JOY_PUSH_UP){
+				if(currentOption > 0){
+					currentOption--;
+				}
+				delay_ms(100);
+		}
+		
+		if(JOY_PUSH_DOWN){
+				if(currentOption < 1){
+					currentOption++;
+				}
+				delay_ms(100);
+		}
+			
+		if(JOY_PUSH_LEFT){
+			leftPushed = true;
+			delay_ms(100);
+		}
+		
+		
+		if(JOY_PUSH_RIGHT){
+			rightPushed = true;
+			delay_ms(100);
+		}
+			
+		if(LEFT_KEY_DOWN){
+			
+			delay_ms(100);
+		}
+		
+		if(RIGHT_KEY_DOWN){
+			fromReturn = true;
+			delay_ms(100);
+			return;
+		}
 	}
 }
 
@@ -489,9 +607,11 @@ void authorScreen(void){
 		LCDPutStr("AUTOR", 20, 45, SMALL, BLACK, RED);
 		LCDPutStr("KRZYSZTOF PLUCINSKI", 40, 45, SMALL, BLACK, RED);
 		
-		if(RIGHT_KEY_DOWN)
-			menuScreen();
-			//return;
+		if(RIGHT_KEY_DOWN){
+			fromReturn = true;
+			delay_ms(100);
+			return;
+		}
 	}
 }
 
