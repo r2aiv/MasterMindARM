@@ -10,6 +10,7 @@ void drawGameNet(void);
 void drawCircleLine(int line);
 void drawCircleCursor(int currentPosition, int newPosition);
 void drawNumber(int oldNumber, int newNumber, int position);
+void drawNumberLine(int numbers[5], int line);
 void drawResultDots(int line);
 void drawResultFilledDots(int line, guess values[5]);
 

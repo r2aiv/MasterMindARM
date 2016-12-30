@@ -41,19 +41,23 @@ lcd.c(144): warning:  #61-D: integer operation result is out of range
 T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
 lcd.c: 2 warnings, 0 errors
 compiling Main.c...
-draw.h(16): warning:  #1-D: last line of file ends without a newline
+draw.h(17): warning:  #1-D: last line of file ends without a newline
   #endif
-Main.c(329): warning:  #167-D: argument of type "volatile guess *" is incompatible with parameter of type "guess *"
-                        drawResultFilledDots(0, ifWinArray);
-Main.c: 2 warnings, 0 errors
+Main.c(274): warning:  #167-D: argument of type "volatile int *" is incompatible with parameter of type "int *"
+        drawNumberLine(currentArray, 0);
+Main.c(346): warning:  #167-D: argument of type "volatile int *" is incompatible with parameter of type "int *"
+                                drawNumberLine(chooseHistoryArray[i], i + 1);
+Main.c(347): warning:  #167-D: argument of type "volatile guess *" is incompatible with parameter of type "guess *"
+                                drawResultFilledDots(i + 1, resultHistoryArray[i]);
+Main.c: 4 warnings, 0 errors
 compiling animation.c...
 compiling draw.c...
-draw.h(16): warning:  #1-D: last line of file ends without a newline
+draw.h(17): warning:  #1-D: last line of file ends without a newline
   #endif
 draw.c: 1 warning, 0 errors
 linking...
-Program Size: Code=7508 RO-data=3148 RW-data=56 ZI-data=1344  
-".\Flash\Blinky.axf" - 0 Error(s), 5 Warning(s).
+Program Size: Code=7680 RO-data=3148 RW-data=56 ZI-data=1464  
+".\Flash\Blinky.axf" - 0 Error(s), 7 Warning(s).
 
 *** Performing Cross-Module-Optimization:
 compiling Retarget.c...
@@ -67,14 +71,18 @@ lcd.c(144): warning:  #61-D: integer operation result is out of range
 T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
 lcd.c: 2 warnings, 0 errors
 compiling Main.c...
-draw.h(16): warning:  #1-D: last line of file ends without a newline
+draw.h(17): warning:  #1-D: last line of file ends without a newline
   #endif
-Main.c(329): warning:  #167-D: argument of type "volatile guess *" is incompatible with parameter of type "guess *"
-                        drawResultFilledDots(0, ifWinArray);
-Main.c: 2 warnings, 0 errors
+Main.c(274): warning:  #167-D: argument of type "volatile int *" is incompatible with parameter of type "int *"
+        drawNumberLine(currentArray, 0);
+Main.c(346): warning:  #167-D: argument of type "volatile int *" is incompatible with parameter of type "int *"
+                                drawNumberLine(chooseHistoryArray[i], i + 1);
+Main.c(347): warning:  #167-D: argument of type "volatile guess *" is incompatible with parameter of type "guess *"
+                                drawResultFilledDots(i + 1, resultHistoryArray[i]);
+Main.c: 4 warnings, 0 errors
 compiling animation.c...
 linking...
-Program Size: Code=6988 RO-data=3148 RW-data=56 ZI-data=1344  
+Program Size: Code=7160 RO-data=3148 RW-data=56 ZI-data=1464  
 compiling Retarget.c...
 compiling delay.c...
 compiling lcd.c...
@@ -86,18 +94,22 @@ lcd.c(144): warning:  #61-D: integer operation result is out of range
 T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
 lcd.c: 2 warnings, 0 errors
 compiling Main.c...
-draw.h(16): warning:  #1-D: last line of file ends without a newline
+draw.h(17): warning:  #1-D: last line of file ends without a newline
   #endif
-Main.c(329): warning:  #167-D: argument of type "volatile guess *" is incompatible with parameter of type "guess *"
-                        drawResultFilledDots(0, ifWinArray);
-Main.c: 2 warnings, 0 errors
+Main.c(274): warning:  #167-D: argument of type "volatile int *" is incompatible with parameter of type "int *"
+        drawNumberLine(currentArray, 0);
+Main.c(346): warning:  #167-D: argument of type "volatile int *" is incompatible with parameter of type "int *"
+                                drawNumberLine(chooseHistoryArray[i], i + 1);
+Main.c(347): warning:  #167-D: argument of type "volatile guess *" is incompatible with parameter of type "guess *"
+                                drawResultFilledDots(i + 1, resultHistoryArray[i]);
+Main.c: 4 warnings, 0 errors
 compiling animation.c...
 linking...
-Program Size: Code=6988 RO-data=3148 RW-data=56 ZI-data=1344  
+Program Size: Code=7160 RO-data=3148 RW-data=56 ZI-data=1464  
 FromELF: creating hex file...
-".\Flash\Blinky.axf" - 0 Error(s), 4 Warning(s).
+".\Flash\Blinky.axf" - 0 Error(s), 6 Warning(s).
 *** Completed Cross-Module-Optimization after 3 iteration(s).
-Build Time Elapsed:  00:00:06
+Build Time Elapsed:  00:00:08
 </pre>
 </body>
 </html>

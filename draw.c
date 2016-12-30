@@ -54,6 +54,17 @@ void drawNumber(int oldNumber, int newNumber, int position){
 	LCDPutChar(newNumber + '0', 110, 9 + deltaY, LARGE, RED, BLACK);
 }
 
+void drawNumberLine(int numbers[5], int line){
+	int i, deltaX;
+	deltaX = 26 * line;
+	
+	if(numbers[0] != 0){
+		for(i = 0; i < 5; i++){
+			LCDPutChar(numbers[i] + '0', 110 - deltaX, (9 + (20 * i)), LARGE, RED, BLACK);
+		}
+	}
+}
+
 void drawResultDots(int line){
 	int deltaLine;
 	

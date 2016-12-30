@@ -38,6 +38,10 @@ void generateNumbers(void);
 void resetFlagArray(void);
 bool checkValues(void);
 void clearAfterGame(void);
+void clearChooseHistoryArray(void);
+void saveChoosenValues(void);
+void clearResultHistoryArray(void);
+void saveResultValues(void);
 /**** END OF FUNCTIONS DECLARATION ****/
 
 /**** GLOBAL VARIABLE DECLARATION ****/
@@ -51,6 +55,8 @@ int gameTime;
 volatile int globalTime;
 static volatile unsigned int status_IRQ;
 bool fromReturn = false;
+volatile int chooseHistoryArray[3][5];
+volatile guess resultHistoryArray[3][5];
 
 /**** LED DEFINE INIT ****/
 //TODO lines 67-81 -> dead code
@@ -133,6 +139,8 @@ int main(void){
 	InitSpi();
 	InitLcd();
 	LCDClearScreen();
+	clearChooseHistoryArray();
+	clearResultHistoryArray();
 
 	helloScreen();
 }
@@ -224,7 +232,7 @@ void menuScreen(void){
 		if(JOY_PUSH_UP || JOY_PUSH_LEFT){
 			if(currentOption > 0)
 				currentOption--;
-				delay_ms(50);
+				delay_ms(100);
 				LCDClearScreen();
 		}
 		
@@ -243,6 +251,7 @@ void menuScreen(void){
 void gameScreen (void){
 	int currentOption = 0;
 	bool isWin = false;
+	int i;
 	
 	LCDClearScreen();
 	
@@ -254,12 +263,15 @@ void gameScreen (void){
 	drawCircleLine(1);
 	drawCircleLine(2);
 	drawCircleLine(3);
-		
+		/*
 	LCDPutChar(currentArray[0] + '0', 110, 9, LARGE, RED, BLACK); //znak w kole
 	LCDPutChar(currentArray[1] + '0', 110, 29, LARGE, RED, BLACK); //znak w kole
 	LCDPutChar(currentArray[2] + '0', 110, 49, LARGE, RED, BLACK); //znak w kole
 	LCDPutChar(currentArray[3] + '0', 110, 69, LARGE, RED, BLACK); //znak w kole
 	LCDPutChar(currentArray[4] + '0', 110, 89, LARGE, RED, BLACK); //znak w kole
+	*/
+	
+	drawNumberLine(currentArray, 0);
 
 	//LCDPutStr("CZAS: xxxx", 6, 5, SMALL, BLACK, RED);
 	LCDPutStr("ILOSC PROB: x", 16, 5, SMALL, BLACK, RED);
@@ -276,11 +288,11 @@ void gameScreen (void){
 	LCDSetCircle(112, 112, 3, RED);
 	LCDSetCircle(112, 124, 3, RED);
 	
-	LCDPutChar(targetArray[0] + '0', 84, 9, LARGE, RED, BLACK);
-	LCDPutChar(targetArray[1] + '0', 84, 29, LARGE, RED, BLACK);
-	LCDPutChar(targetArray[2] + '0', 84, 49, LARGE, RED, BLACK);
-	LCDPutChar(targetArray[3] + '0', 84, 69, LARGE, RED, BLACK);
-	LCDPutChar(targetArray[4] + '0', 84, 89, LARGE, RED, BLACK);
+	LCDPutChar(targetArray[0] + '0', 5, 102, SMALL, RED, BLACK);
+	LCDPutChar(targetArray[1] + '0', 5, 107, SMALL, RED, BLACK);
+	LCDPutChar(targetArray[2] + '0', 5, 112, SMALL, RED, BLACK);
+	LCDPutChar(targetArray[3] + '0', 5, 117, SMALL, RED, BLACK);
+	LCDPutChar(targetArray[4] + '0', 5, 122, SMALL, RED, BLACK);
 	
 	/////////////////	
 	globalTime = 0;
@@ -325,10 +337,19 @@ void gameScreen (void){
 			}
 			
 		if(LEFT_KEY_DOWN){
+			delay_ms(100);
 			isWin = checkValues();
-			drawResultFilledDots(0, ifWinArray);
+			//drawResultFilledDots(0, ifWinArray);
+			saveChoosenValues();
+			saveResultValues();
+			for(i = 0; i < 3; i++){
+				drawNumberLine(chooseHistoryArray[i], i + 1);
+				drawResultFilledDots(i + 1, resultHistoryArray[i]);
+			}
 			if(isWin == true){
-				delay_ms(100);
+				clearChooseHistoryArray();
+				clearResultHistoryArray();
+				clearAfterGame();
 				winScreen();
 				return;
 			}
@@ -341,6 +362,9 @@ void gameScreen (void){
 		if(RIGHT_KEY_DOWN){
 			globalTime = 0;
 			fromReturn = true;
+			clearChooseHistoryArray();
+			clearResultHistoryArray();
+			clearAfterGame();
 			delay_ms(100);
 			return;
 		}
@@ -431,11 +455,9 @@ bool checkValues(void){
 	//checking targetArray
 	for(i = 0; i < 5; i++){
 		if(ifWinArray[i] != GOOD){
-			LCDPutStr("ZLE", 20, 50, SMALL, BLACK, RED);
 			return false;
 		}
 	}
-	LCDPutStr("DOBRZE", 20, 50, SMALL, BLACK, RED);
 	return true;
 }
 
@@ -470,6 +492,47 @@ void authorScreen(void){
 		if(RIGHT_KEY_DOWN)
 			menuScreen();
 			//return;
+	}
+}
+
+void clearChooseHistoryArray(void){
+	int i, j;
+	for(i = 0; i < 3; i++){
+		for(j = 0; j < 5; j++){
+			chooseHistoryArray[i][j] = 0;
+		}	
+	}
+}
+
+void saveChoosenValues(void){
+	int i, j;
+	for(i = 2; i > 0; i--){
+		for(j = 0; j < 5; j++){
+			chooseHistoryArray[i][j] = chooseHistoryArray[i - 1][j];
+		}
+	}
+	for(j = 0; j < 5; j++){
+		chooseHistoryArray[0][j] = currentArray[j];
+	}
+}
+
+void clearResultHistoryArray(void){
+		int i, j;
+	for(i = 0; i < 3; i++){
+		for(j = 0; j < 5; j++){
+			resultHistoryArray[i][j] = BAD;
+		}	
+	}
+}
+void saveResultValues(void){
+	int i, j;
+	for(i = 2; i > 0; i--){
+		for(j = 0; j < 5; j++){
+			resultHistoryArray[i][j] = resultHistoryArray[i - 1][j];
+		}
+	}
+	for(j = 0; j < 5; j++){
+		resultHistoryArray[0][j] = ifWinArray[j];
 	}
 }
 
