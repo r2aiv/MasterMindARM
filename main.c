@@ -59,7 +59,8 @@ int chooseHistoryArray[3][5];
 guess resultHistoryArray[3][5];
 int atempts = 5;
 int difficult;
-bool devMode = true;
+bool devMode = false;
+int score = 0;
 
 /**** LED DEFINE INIT ****/
 //TODO lines 67-81 -> dead code
@@ -183,9 +184,10 @@ void menuScreen(void){
 
 		LCDPutStr("MENU", 20, 50, SMALL, BLACK, RED);
 		LCDPutStr("1.NOWA GRA", 50, 10, SMALL, BLACK, RED);
-		LCDPutStr("2.NAJLEPSZE WYNIKI", 70, 10, SMALL, BLACK, RED);
+//	LCDPutStr("2.NAJLEPSZE WYNIKI", 70, 10, SMALL, BLACK, RED);
+		LCDPutStr("2.AUTOR", 70, 10, SMALL, BLACK, RED);
 		LCDPutStr("3.OPCJE", 90, 10, SMALL, BLACK, RED);
-// 	LCDPutStr("4.AUTOR", 110, 10, SMALL, BLACK, RED);
+
 		LCDPutStr("WYBIERZ", 120, 0, SMALL, BLACK, RED);
 		
 		switch(currentOption){
@@ -207,13 +209,24 @@ void menuScreen(void){
 			case 1:
 				if(runOption){
 					runOption = 0;
-					highScoreScreen();
+					authorScreen();
 				}
 				LCDSetCircle(53, 5,3, BLACK);
 				LCDSetCircle(73, 5,3, RED);
 				LCDSetCircle(93, 5,3, BLACK);
 				break;
 				
+			/*	
+			case 1:
+				if(runOption){
+					runOption = 0;
+					highScoreScreen();
+				}
+				LCDSetCircle(53, 5,3, BLACK);
+				LCDSetCircle(73, 5,3, RED);
+				LCDSetCircle(93, 5,3, BLACK);
+				break;
+				*/
 			case 2:
 				if(runOption){
 					runOption = 0;
@@ -225,11 +238,7 @@ void menuScreen(void){
 				break;
 				
 			/*Author screen
-				case 3:
-				if(runOption)
-					authorScreen();
-				LCDSetCircle(93, 5,3, RED);
-				break;
+
 				*/
 		}
 		
@@ -364,6 +373,17 @@ void gameScreen (void){
 				drawResultFilledDots(i + 1, resultHistoryArray[i]);
 			}
 			if(isWin == true){
+				score = ((int)(atempts * 100/gameTime))*100;
+				switch(difficult){
+					case EASY:
+						score = (int)score * 0.001;
+						break;
+					case MEDIUM:
+						break;
+					case HARD:
+						score = score * 2;
+						break;
+				}
 				winScreen();
 				return;
 			}
@@ -403,7 +423,11 @@ void winScreen(void){
 	
 	LCDPutStr("!!WYGRALES!!", 20, 17, LARGE, BLACK, RED);	
 	LCDPutStr("TWOJ CZAS TO:", 50, 15, MEDIUM, BLACK, RED);	
-	LCDPutStr("TWOJ WYNIK TO:", 80, 12, MEDIUM, BLACK, RED);	
+	sprintf(ciag, "%d", gameTime);
+	LCDPutStr(ciag, 60, 15, SMALL, BLACK, RED);	
+	LCDPutStr("TWOJ WYNIK TO:", 80, 12, MEDIUM, BLACK, RED);
+	sprintf(ciag, "%d", score);
+	LCDPutStr(ciag, 90, 15, SMALL, BLACK, RED);		
 	
 	clearChooseHistoryArray();
 	clearResultHistoryArray();
@@ -508,9 +532,9 @@ void optionScreen(void){
 		LCDPutStr("DEV MODE", 70, 2, MEDIUM, BLACK, RED);
 		
 		if(devMode == true)
-			LCDPutStr("TAK", 80, 2, SMALL, BLACK, RED);
+			LCDPutStr("TAK", 80, 10, SMALL, BLACK, RED);
 		if(devMode == false)
-			LCDPutStr("NIE", 80, 2, SMALL, BLACK, RED);
+			LCDPutStr("NIE", 80, 10, SMALL, BLACK, RED);
 		
 		switch(difficult){
 			case EASY:
@@ -528,7 +552,8 @@ void optionScreen(void){
 		
 		switch(currentOption){
 			case 0:
-				
+				LCDSetCircle(63, 5,3, YELLOW);
+				LCDSetCircle(83, 5,3, BLACK);
 				if(leftPushed == true){
 					if(difficult > 0){
 						difficult--;
@@ -546,7 +571,8 @@ void optionScreen(void){
 				break;
 				
 			case 1:
-				
+				LCDSetCircle(63, 5,3, BLACK);
+				LCDSetCircle(83, 5,3, YELLOW);
 				if(leftPushed == true){
 					if(devMode == true){
 						devMode = false;
@@ -605,7 +631,7 @@ void authorScreen(void){
 	LCDClearScreen();
 	while(1){
 		LCDPutStr("AUTOR", 20, 45, SMALL, BLACK, RED);
-		LCDPutStr("KRZYSZTOF PLUCINSKI", 40, 45, SMALL, BLACK, RED);
+		LCDPutStr("KRZYSZTOF PLUCINSKI", 40, 5, SMALL, BLACK, RED);
 		
 		if(RIGHT_KEY_DOWN){
 			fromReturn = true;
