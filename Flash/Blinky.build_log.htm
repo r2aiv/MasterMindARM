@@ -3,43 +3,36 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: µVision V5.21.1.0
-Copyright (C) 2016 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: K P, Student, LIC=----
+IDE-Version: µVision V5.15
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: r2aiv r2aiv, r2aiv, LIC=DSNLQ-N17BK-KSTYM-XU4H4-ZJPCP-QN6ZZ
  
 Tool Versions:
-Toolchain:       MDK-Lite  Version: 5.21a
-Toolchain Path:  F:\Keil_v5\ARM\ARMCC\Bin
-C Compiler:      Armcc.exe V5.06 update 3 (build 300)
-Assembler:       Armasm.exe V5.06 update 3 (build 300)
-Linker/Locator:  ArmLink.exe V5.06 update 3 (build 300)
-Library Manager: ArmAr.exe V5.06 update 3 (build 300)
-Hex Converter:   FromElf.exe V5.06 update 3 (build 300)
-CPU DLL:         SARM.DLL V5.21a
-Dialog DLL:      DARMATS.DLL V1.21.0.0
-Target DLL:      UL2ARM.DLL V1.74.9.0
-Dialog DLL:      TARMATS.DLL V1.21.0.0
+Toolchain:       MDK-ARM Professional  Version: 5.15.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 2 (build 169)
+Assembler:       Armasm.exe V5.05 update 2 (build 169)
+Linker/Locator:  ArmLink.exe V5.05 update 2 (build 169)
+Library Manager: ArmAr.exe V5.05 update 2 (build 169)
+Hex Converter:   FromElf.exe V5.05 update 2 (build 169)
+CPU DLL:         SARM.DLL V5.15.0
+Dialog DLL:      DARMATS.DLL V1.20
+Target DLL:      UL2ARM.DLL V1.74.6.0
+Dialog DLL:      TARMATS.DLL V1.20
  
 <h2>Project:</h2>
-E:\Projekty\Systemy Wbudowane\Mastermind.uvproj
-Project File Date:  12/30/2016
+C:\MasterMindARM\Mastermind.uvproj
+Project File Date:  09/22/2019
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 3 (build 300)', folder: 'F:\Keil_v5\ARM\ARMCC\Bin'
-Build target 'SAM7X Flash - ULINK'
+*** Using Compiler 'V5.05 update 2 (build 169)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'SAM7X Flash - ULINK'
 Clean started - Project: 'Mastermind'
    deleting intermediate output files for target 'SAM7X Flash - ULINK'
 assembling SAM7.s...
 compiling Retarget.c...
 compiling delay.c...
 compiling lcd.c...
-lcd.c(133): warning:  #61-D: integer operation result is out of range
-        (
-T91C_SPI_DLYBCS & (0 << 24)) |    // Delay between chip selects (take default: 6 MCK periods)
-lcd.c(144): warning:  #61-D: integer operation result is out of range
-        (
-T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
-lcd.c: 2 warnings, 0 errors
 compiling Main.c...
 draw.h(17): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -51,19 +44,12 @@ draw.h(17): warning:  #1-D: last line of file ends without a newline
 draw.c: 1 warning, 0 errors
 linking...
 Program Size: Code=9592 RO-data=3148 RW-data=72 ZI-data=1464  
-".\Flash\Blinky.axf" - 0 Error(s), 4 Warning(s).
+".\Flash\Blinky.axf" - 0 Error(s), 2 Warning(s).
 
 *** Performing Cross-Module-Optimization:
 compiling Retarget.c...
 compiling delay.c...
 compiling lcd.c...
-lcd.c(133): warning:  #61-D: integer operation result is out of range
-        (
-T91C_SPI_DLYBCS & (0 << 24)) |    // Delay between chip selects (take default: 6 MCK periods)
-lcd.c(144): warning:  #61-D: integer operation result is out of range
-        (
-T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
-lcd.c: 2 warnings, 0 errors
 compiling Main.c...
 draw.h(17): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -74,13 +60,6 @@ Program Size: Code=9072 RO-data=3148 RW-data=72 ZI-data=1464
 compiling Retarget.c...
 compiling delay.c...
 compiling lcd.c...
-lcd.c(133): warning:  #61-D: integer operation result is out of range
-        (
-T91C_SPI_DLYBCS & (0 << 24)) |    // Delay between chip selects (take default: 6 MCK periods)
-lcd.c(144): warning:  #61-D: integer operation result is out of range
-        (
-T91C_SPI_DLYBCT & (0x01 << 24))     |  // Delay between Consecutive Transfers (32 MCK periods)
-lcd.c: 2 warnings, 0 errors
 compiling Main.c...
 draw.h(17): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -89,9 +68,8 @@ compiling animation.c...
 linking...
 Program Size: Code=9072 RO-data=3148 RW-data=72 ZI-data=1464  
 FromELF: creating hex file...
-".\Flash\Blinky.axf" - 0 Error(s), 3 Warning(s).
+".\Flash\Blinky.axf" - 0 Error(s), 1 Warning(s).
 *** Completed Cross-Module-Optimization after 3 iteration(s).
-Build Time Elapsed:  00:00:07
 </pre>
 </body>
 </html>
